@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LU4 Polearm Guide</title>
+<meta name="description" content="Warlord and AoE-group handbook for Liberta Ultimata 4 (LU4, «Луч»): polearm classes, tier-list consensus, leveling route, repeatables, gear, dyes and party setup.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0d12">
+<link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔱%3C/text%3E%3C/svg%3E">
+<style>
+/* LU4 Polearm Guide — dark, Lineage-flavoured, mobile-first */
+:root {
+  color-scheme: dark;
+  --bg: #0b0d12;
+  --bg2: #12151d;
+  --bg3: #1a1e29;
+  --line: #2a3040;
+  --text: #d8d4c8;
+  --muted: #8f8a7c;
+  --gold: #c9a961;
+  --gold2: #e6c97a;
+  --red: #b4453c;
+  --green: #5f9c6a;
+  --blue: #5b8bd6;
+  --spear: rgba(201, 169, 97, 0.10);
+  --serif: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% -10%, rgba(201,169,97,0.08), transparent 55%),
+    radial-gradient(ellipse at 90% 110%, rgba(91,139,214,0.06), transparent 50%);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+}
+a { color: var(--gold2); text-decoration: none; border-bottom: 1px dotted rgba(230,201,122,0.5); }
+a:hover { color: #fff; border-bottom-color: #fff; }
+h1, h2, h3, h4 { font-family: var(--serif); color: var(--gold2); font-weight: 600; letter-spacing: 0.01em; line-height: 1.2; }
+h1 { font-size: 1.7rem; margin: 0 0 .3rem; }
+h2 { font-size: 1.35rem; margin: 0; }
+h3 { font-size: 1.1rem; margin: 1.4rem 0 .5rem; color: var(--gold); }
+h4 { font-size: 1rem; margin: 1rem 0 .3rem; color: var(--text); }
+p { margin: .6rem 0; }
+code { font-family: var(--mono); font-size: .85em; background: var(--bg3); padding: .1em .35em; border-radius: 3px; }
+hr.rule { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1.2rem 0; }
+
+/* Header */
+header.site {
+  padding: 1.2rem 1rem .8rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #151925, var(--bg));
+}
+header.site .kicker { font-family: var(--serif); color: var(--gold); letter-spacing: .25em; text-transform: uppercase; font-size: .7rem; }
+header.site .sub { color: var(--muted); font-size: .9rem; margin: .2rem 0 .6rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .78rem; color: var(--muted); }
+.meta span { border: 1px solid var(--line); border-radius: 999px; padding: .15rem .6rem; }
+.meta .updated { color: var(--gold2); border-color: var(--gold); }
+
+/* Sticky TOC */
+nav.toc {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(11,13,18,0.94);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+nav.toc .scroller { display: flex; gap: .35rem; overflow-x: auto; padding: .5rem .75rem; scrollbar-width: none; }
+nav.toc .scroller::-webkit-scrollbar { display: none; }
+nav.toc a {
+  flex: 0 0 auto; white-space: nowrap; font-size: .78rem;
+  padding: .3rem .65rem; border-radius: 999px; border: 1px solid var(--line);
+  color: var(--text); background: var(--bg2);
+}
+nav.toc a.active { border-color: var(--gold); color: var(--gold2); background: var(--spear); }
+
+/* Layout */
+main { padding: 0 .75rem 3rem; max-width: 1080px; margin: 0 auto; }
+section.block { margin: 1rem 0; border: 1px solid var(--line); border-radius: 10px; background: var(--bg2); overflow: hidden; }
+section.block > details > summary {
+  list-style: none; cursor: pointer; padding: .9rem 1rem; display: flex; align-items: center; gap: .6rem;
+  background: linear-gradient(90deg, rgba(201,169,97,0.08), transparent);
+}
+section.block > details > summary::-webkit-details-marker { display: none; }
+section.block > details > summary .num { font-family: var(--serif); color: var(--gold); font-size: .85rem; min-width: 1.6rem; }
+section.block > details > summary::after { content: "+"; margin-left: auto; color: var(--gold); font-size: 1.3rem; line-height: 1; }
+section.block > details[open] > summary::after { content: "−"; }
+section.block .body { padding: .2rem 1rem 1.2rem; }
+
+/* Tags */
+.tag { display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: .1rem .45rem; border-radius: 4px; vertical-align: middle; margin-left: .25rem; white-space: nowrap; }
+.tag.fact { background: rgba(95,156,106,0.18); color: #8fd39a; border: 1px solid rgba(95,156,106,0.5); }
+.tag.consensus { background: rgba(91,139,214,0.18); color: #9cbdf0; border: 1px solid rgba(91,139,214,0.5); }
+.tag.opinion { background: rgba(201,169,97,0.15); color: var(--gold2); border: 1px solid rgba(201,169,97,0.5); }
+.tag.retail { background: rgba(180,69,60,0.18); color: #f0a49c; border: 1px solid rgba(180,69,60,0.5); }
+.tag.na { background: rgba(143,138,124,0.15); color: var(--muted); border: 1px solid var(--line); }
+.tag.stale { background: rgba(180,69,60,0.12); color: #d99; border: 1px dashed rgba(180,69,60,0.5); }
+.src { font-size: .78rem; color: var(--muted); }
+.src a { color: var(--gold); }
+
+/* Callouts */
+.callout { border-left: 3px solid var(--gold); background: var(--bg3); padding: .6rem .9rem; margin: .8rem 0; border-radius: 0 6px 6px 0; font-size: .95rem; }
+.callout.warn { border-left-color: var(--red); }
+.callout.good { border-left-color: var(--green); }
+.callout.info { border-left-color: var(--blue); }
+.callout .t { font-weight: 700; color: var(--gold2); display: block; margin-bottom: .2rem; }
+.callout.warn .t { color: #f0a49c; }
+.callout.good .t { color: #8fd39a; }
+.callout.info .t { color: #9cbdf0; }
+
+/* Cards */
+.cards { display: grid; grid-template-columns: 1fr; gap: .8rem; margin: .8rem 0; }
+@media (min-width: 720px) { .cards { grid-template-columns: 1fr 1fr; } }
+.card { border: 1px solid var(--line); border-radius: 8px; padding: .8rem .9rem; background: var(--bg3); }
+.card.polearm { border-color: var(--gold); background: linear-gradient(180deg, var(--spear), var(--bg3)); }
+.card h3 { margin: 0 0 .3rem; }
+.card .ru { color: var(--muted); font-size: .85rem; font-family: var(--serif); }
+.card .verdict { font-weight: 700; color: var(--gold2); }
+.card ul { padding-left: 1.1rem; margin: .4rem 0; }
+.card li { margin: .2rem 0; font-size: .93rem; }
+
+/* Tables */
+.tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: .8rem 0; border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: .86rem; min-width: 640px; }
+th, td { padding: .5rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+th { background: var(--bg3); color: var(--gold); font-family: var(--serif); font-weight: 600; position: sticky; top: 0; }
+tr.polearm td { background: var(--spear); }
+tr.polearm td:first-child { border-left: 3px solid var(--gold); font-weight: 700; color: var(--gold2); }
+td.r { text-align: center; font-weight: 700; }
+.tier-S { color: #f0c96b; } .tier-A { color: #8fd39a; } .tier-B { color: #9cbdf0; } .tier-C { color: #f0a49c; } .tier-x { color: var(--muted); }
+table.compact { min-width: 0; }
+
+/* Lists */
+ul, ol { padding-left: 1.3rem; }
+li { margin: .3rem 0; }
+dl.gloss { display: grid; grid-template-columns: 1fr; gap: .15rem .8rem; }
+dl.gloss dt { font-weight: 700; color: var(--gold2); font-family: var(--serif); margin-top: .5rem; }
+dl.gloss dd { margin: 0; font-size: .93rem; }
+@media (min-width: 720px) { dl.gloss { grid-template-columns: 11rem 1fr; } dl.gloss dt { margin-top: 0; } }
+
+/* Comp diagram */
+.comp { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; margin: .6rem 0; }
+.comp .slot { border: 1px solid var(--line); border-radius: 6px; padding: .45rem .3rem; text-align: center; font-size: .8rem; background: var(--bg3); }
+.comp .slot.p { border-color: var(--gold); background: var(--spear); color: var(--gold2); font-weight: 700; }
+.comp .slot.s { border-color: var(--blue); color: #9cbdf0; }
+.comp .slot.h { border-color: var(--green); color: #8fd39a; }
+.comp .slot.o { border-style: dashed; color: var(--muted); }
+
+/* Search */
+.searchbar { padding: .6rem .75rem 0; max-width: 1080px; margin: 0 auto; }
+.searchbar input { width: 100%; padding: .55rem .8rem; border-radius: 8px; border: 1px solid var(--line); background: var(--bg2); color: var(--text); font-size: .95rem; }
+.searchbar input:focus { outline: none; border-color: var(--gold); }
+mark { background: rgba(201,169,97,0.35); color: #fff; padding: 0 .1em; }
+.controls { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .5rem; padding: .5rem .75rem 0; max-width: 1080px; margin: 0 auto; font-size: .8rem; }
+.controls .legend { flex: 1 1 100%; color: var(--muted); line-height: 1.9; }
+@media (min-width: 720px) { .controls .legend { flex: 1 1 auto; margin-left: auto; text-align: right; } }
+.controls button { background: var(--bg2); border: 1px solid var(--line); color: var(--text); border-radius: 999px; padding: .25rem .7rem; cursor: pointer; font-size: .78rem; }
+.controls button:hover { border-color: var(--gold); color: var(--gold2); }
+
+footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 1.5rem 1rem 2.5rem; border-top: 1px solid var(--line); }
+#top { position: fixed; right: .8rem; bottom: .8rem; background: var(--bg3); border: 1px solid var(--gold); color: var(--gold2); border-radius: 999px; width: 2.4rem; height: 2.4rem; display: none; align-items: center; justify-content: center; text-decoration: none; z-index: 30; }
+#top.show { display: flex; }
+
+/* Wide tables: give long text columns a floor so rows stay short on phones (table scrolls sideways) */
+.tablewrap table td:nth-child(n+2), .tablewrap table th:nth-child(n+2) { min-width: 9rem; }
+.tablewrap table.compact td, .tablewrap table.compact th { min-width: 0; }
+#tiers table td:nth-child(6), #tiers table th:nth-child(6) { min-width: 20rem; }
+#tiers table td:nth-child(7), #tiers table th:nth-child(7) { min-width: 14rem; }
+#tiers table td.r { min-width: 4rem; }
+#leveling table td:nth-child(2), #leveling table td:nth-child(3), #quests table td:nth-child(2), #quests table td:nth-child(3), #gear table td:nth-child(2), #gear table td:nth-child(3) { min-width: 16rem; }
+#tiers table th:nth-child(-n+5):not(:first-child), #tiers table td:nth-child(-n+5):not(:first-child) { min-width: 4.2rem; }
+#tiers table td:first-child, #tiers table th:first-child { min-width: 8rem; }
+@media (max-width: 719px) {
+  .tablewrap { position: relative; }
+  .tablewrap::after { content: "swipe sideways for more →"; display: block; font-size: .7rem; color: var(--muted); padding: .25rem .6rem; border-top: 1px solid var(--line); }
+}
+
+/* ===== v5 layout: responsive data tables + two-column desktop ===== */
+.rt { width: 100%; min-width: 0; border-collapse: collapse; font-size: .86rem; }
+.rt th, .rt td { padding: .45rem .55rem; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+.rt th { background: var(--bg3); color: var(--gold); font-family: var(--serif); font-weight: 600; }
+.rt td.k { color: var(--gold2); font-weight: 700; white-space: nowrap; }
+.rt tr.polearm td { background: var(--spear); }
+.rt tr.polearm td.k { border-left: 3px solid var(--gold); }
+.rtwrap { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: .7rem 0; }
+@media (max-width: 719px) {
+  .rt thead { display: none; }
+  .rt, .rt tbody, .rt tr, .rt td { display: block; width: 100%; }
+  .rt tr { border-bottom: 2px solid var(--gold); padding: .35rem 0; }
+  .rt tr:last-child { border-bottom: 0; }
+  .rt td { border: 0; padding: .2rem .7rem; }
+  .rt td.k { font-size: 1rem; padding-top: .5rem; white-space: normal; }
+  .rt td[data-l]::before { content: attr(data-l); display: block; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .05rem; }
+}
+.kv { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: .7rem 0; }
+.kv > div { padding: .45rem .7rem; border-bottom: 1px solid var(--line); font-size: .9rem; }
+.kv > div:last-child { border-bottom: 0; }
+.kv > div > b:first-child { color: var(--gold2); font-family: var(--serif); display: block; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
+@media (min-width: 720px) { .kv { grid-template-columns: 1fr 1fr; } .kv > div:nth-last-child(2):nth-child(odd) { border-bottom: 0; } }
+@media (min-width: 720px) { .kv.three { grid-template-columns: 1fr 1fr 1fr; } }
+.two { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; align-items: start; } }
+.tight p { margin: .35rem 0; }
+h3 { margin-top: 1.1rem; }
+a.sk { color: var(--text); border-bottom: 1px dotted var(--gold); }
+a.sk:hover { color: var(--gold2); }
+
+</style>
+</head>
+<body>
+
+<header class="site" id="top-of-page">
+  <div class="kicker">Liberta Ultimata 4 · «Луч»</div>
+  <h1>LU4 Polearm Guide</h1>
+  <div class="sub">Warlord &amp; AoE-group handbook, built from the official forum, patch notes, Telegram and fan databases. Written for a group of friends who want to play spears together.</div>
+  <div class="meta">
+    <span class="updated">Last updated: 10 Sep 2026</span>
+    <span>Game state: Alpha 1 · patch #13 (7 Sep 2026)</span>
+    <span>Servers: Gamma · Black · White · Carmine</span>
+    <span>Level cap 75 · A-grade</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Table of contents">
+  <div class="scroller">
+    <a href="#overview">1 Start</a>
+    <a href="#classes">2 Polearm classes</a>
+    <a href="#tiers">3 Tier lists</a>
+    <a href="#leveling">4 Route</a>
+    <a href="#quests">5 Dailies</a>
+    <a href="#gear">6 Gear &amp; dyes</a>
+    <a href="#party">7 Our party</a>
+    <a href="#glossary">8 Glossary</a>
+    <a href="#changelog">9 Changelog</a>
+  </div>
+</nav>
+
+<div class="searchbar"><input id="search" type="search" placeholder="Search the guide (e.g. Provoke, fatigue, Coins of Magic, Windy Hill)…" aria-label="Search"></div>
+<div class="controls"><button id="expandAll" type="button">Expand all</button><button id="collapseAll" type="button">Collapse all</button>
+  <span class="legend">Tags: <span class="tag fact">patch-note fact</span> <span class="tag consensus">community consensus</span> <span class="tag opinion">single opinion</span> <span class="tag retail">retail assumption</span></span>
+</div>
+
+<main>
+
+<!-- ===================== 1. START ===================== -->
+<section class="block" id="overview">
+<details open>
+<summary><span class="num">1</span><h2>Overview &amp; how to start</h2></summary>
+<div class="body tight">
+<div class="callout info"><span class="t">Who this is for</span> Three players, five clients: Warlord (+ Bladedancer box), Bounty Hunter (Mitch, + Shillien Elder box), Destroyer. LU4 («Луч») is Interlude-based with heavily reworked classes, a daily XP budget (fatigue) and no x-rates; "Alpha 1" since 22 Jun 2026, so expect balance changes every patch. <span class="src"><a href="https://mw5.community/topic/218681-lu4-liberta-ultimata-concept-alpha-1-220626-gamma-update/">Concept Alpha 1</a></span></div>
+
+<div class="two">
+<div>
+<h3>Servers</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Server</th><th>Opened</th><th>Time zone</th><th>Pick it if…</th></tr></thead>
+<tbody>
+<tr><td class="k">Gamma</td><td data-l="Opened">Jun 2025; Alpha 1 update 22 Jun 2026</td><td data-l="Time zone">UTC+3</td><td data-l="Pick it if">Don't — a year ahead; top clans hold the 60+ zones.</td></tr>
+<tr><td class="k">Black / White</td><td data-l="Opened">31 Jul 2026</td><td data-l="Time zone">UTC+3</td><td data-l="Pick it if">Your evenings are European/CIS. Identical settings, shared name/clan DB.</td></tr>
+<tr><td class="k">Carmine (Кармин)</td><td data-l="Opened">31 Jul 2026</td><td data-l="Time zone">UTC−3</td><td data-l="Pick it if">You're in the Americas or play late EU nights. Own name/clan DB.</td></tr>
+</tbody></table></div>
+<p class="src"><span class="tag fact">fact</span> <a href="https://mw5.community/topic/219571-patchnote-310726-liberta-ultimata-alpha-1-global-update-8/">Global #8</a>. Epics ~21:00 local · sieges Sun 18:00 local bi-weekly since 6 Sep (<a href="https://mw5.community/topic/220089-patchnout-310826-liberta-ultimata-alpha-1-global-update-12/">#12</a>) · restart Mon 10:00 UTC+3 / 04:00 UTC−3, patches bi-weekly from 14 Sep (<a href="https://mw5.community/topic/220168-patchnout-070926-liberta-ultimata-alpha-1-global-update-13/">#13</a>).</p>
+</div>
+<div>
+<h3>Setup</h3>
+<div class="kv">
+<div><b>Account</b><a href="https://mw2.global/">mw2.global</a>; blocked? <a href="https://bit.ly/MW-global">bit.ly/MW-global</a> always points at a live mirror.</div>
+<div><b>Client</b>EGlobal Launcher only (<code>bit.ly/MW-download</code>) → "Lu4" → Check Files. Windows 10/11. <a href="https://mw5.community/topic/218669-lu4-alpha-1-ustanovka-i-obnovlenie-klienta-vstanovlennya-ta-onovlennya-kliienta-client-installation-and-update/">guide</a></div>
+<div><b>Hardware (official)</b>Min i7-6700 / Ryzen 5 1600, 16 GB, RTX 2060 / RX 6600 (GTX not recommended), SSD. Rec. i5-12400F / R5 7500F, 32 GB, RTX 3060/5060. <a href="https://t.me/s/lu4cwo?q=требования">@lu4cwo</a></div>
+<div><b>Gift codes</b>Bot <b>@EGlobal_Master_Bot → Gifts</b> (subscribe to channels first); redeem in the cabinet per character. They expire; new batches drop often. <a href="https://t.me/s/diary_of_shilen?q=Lu4">@diary_of_shilen</a></div>
+<div><b>Premium</b>+50% XP/SP/<b>drop/spoil</b>/weight, free intercity TP, −50% basic TP, free NPC buffs. 20 coins/day or 250/30 days; Gamma Premium is separate. Worth it here for the spoil. <a href="https://mw5.community/topic/220013-patchnote-240826-liberta-ultimata-alpha-1-global-update-11/">#11</a></div>
+<div><b>Starter kit</b>3,000 NG SS, 1,200 NG SpS, 30 HP pots, 10 SoE (#8). NPC buffer free to level 30, unlimited with Premium (<a href="https://mw5.community/topic/218684-patchnote-220626-liberta-ultimata-alpha-1-gamma-update-2/">Gamma #2</a>).</div>
+<div><b>Hubs</b><a href="https://mw5.community/forum/749-lu4-gamma/">forum</a> · <a href="https://t.me/s/lu4cwo">@lu4cwo</a> · <a href="https://t.me/s/diary_of_shilen">@diary_of_shilen</a> · <a href="https://guide.lu4lab.com/">guide.lu4lab.com</a> · <a href="https://lu4db.ru/">lu4db.ru</a> · Discord <code>discord.gg/T88g58V</code></div>
+</div>
+</div>
+</div>
+
+<h3>Five rules that change everything vs. retail</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Rule</th><th>LU4</th><th>Why it matters to us</th></tr></thead>
+<tbody>
+<tr><td class="k">Fatigue</td><td data-l="LU4">Daily XP bar: green 100% → yellow 50% → red 2.5%. Quest XP ignores it. Daily reset (06:30 server time per the concept).</td><td data-l="Why">An AoE party hits yellow in an evening; numbers in §4.</td></tr>
+<tr><td class="k">Two professions, cap 75</td><td data-l="LU4">Tree is 1 → 20 → 40; levels 58–75 add Classic-style skills instead of a 3rd profession.</td><td data-l="Why">Warlord's big AoE tools arrive at 55–68 (§2).</td></tr>
+<tr><td class="k">Profession gates</td><td data-l="LU4">No XP past 25 without 1st profession, past 43 without 2nd.</td><td data-l="Why">Do profession quests on all five clients on time.</td></tr>
+<tr><td class="k">Loot grade = mob level</td><td data-l="LU4">D from mobs 21–35, C 40–55, B 56–65, A 66–75. B has no NPC shop (craft/drop). A armor comes sealed.</td><td data-l="Why">Route by mob level, not by convenience (§4, §6).</td></tr>
+<tr><td class="k"><a href="https://guide.lu4lab.com/classes/skill/254-spoil/7" class="sk">Spoil</a> window</td><td data-l="LU4">Drop/spoil −4…+3 levels, measured from the party's <i>top damage-dealer</i>; XP −5…+4.</td><td data-l="Why">Keep the BH level-matched to the Warlord/Destroyer.</td></tr>
+</tbody></table></div>
+<p class="src"><span class="tag fact">fact</span> Concept Alpha 1 · <a href="https://mw5.community/topic/219800-patchnote-100826-liberta-ultimata-alpha-1-global-update-9/">Global #9</a> · <a href="https://l2gm.com/news/lu4-masterwork-bolshoe-obnovlenie-alpha-1/">l2gm Alpha 1 summary</a> · <a href="https://guide.lu4lab.com/mechanics.html">lu4lab mechanics</a></p>
+</div>
+</details>
+</section>
+
+
+<!-- ===================== 3. CLASSES ===================== -->
+<section class="block" id="classes">
+<details open>
+<summary><span class="num">2</span><h2>Polearm classes</h2></summary>
+<div class="body tight">
+<p><b><a href="https://guide.lu4lab.com/classes/skill/216-polearm-mastery/45" class="sk">Polearm Mastery</a></b> adds P.Atk and extra targets that scale with skill level: <b>+3 at Lv.1 (20), +6 at Lv.9 (40), +10 at Lv.45 (74)</b>. Any SA polearm adds more (+2 or +4 depending on which patch text you read). Gladiator and Tyrant don't have it; Terramancer (new dwarf mage) is an AoE caster. <span class="tag fact">fact</span> <span class="src"><a href="https://guide.lu4lab.com/skills/216-polearm-mastery">skill page</a> · <a href="https://guide.lu4lab.com/classes/">class tree</a></span></p>
+
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Class</th><th>AoE / pull kit</th><th>Unique to it</th><th>Role for us</th><th>Community view</th></tr></thead>
+<tbody>
+<tr class="polearm"><td class="k">Warlord (Копейщик, ВЛ)</td><td data-l="AoE / pull"><a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a> (ignores shield), <a href="https://guide.lu4lab.com/classes/skill/48-thunder-storm/37" class="sk">Thunder Storm</a> (dmg+stun), <a href="https://guide.lu4lab.com/classes/skill/452-shock-stomp/5" class="sk">Shock Stomp</a> 55 (AoE stun), <a href="https://guide.lu4lab.com/classes/skill/347-earthquake/4" class="sk">Earthquake</a> 68, <b><a href="https://guide.lu4lab.com/classes/skill/421-fell-swoop/5" class="sk">Fell Swoop</a> 58: +1…+5 targets</b>. <b><a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a> 43</b>: aggro + −10/15/20% spear resistance.</td><td data-l="Unique"><a href="https://guide.lu4lab.com/classes/skill/31177-dreadnought-spirit/2" class="sk">Dreadnought Spirit</a> 60 (polearm Atk.Spd +8→12%, skill power +10→15%), <a href="https://guide.lu4lab.com/classes/skill/422-polearm-accuracy/3" class="sk">Polearm Accuracy</a> 58 (+2→+4), <a href="https://guide.lu4lab.com/classes/skill/317-focus-attack/5" class="sk">Focus Attack</a> (acc +2→6, crit +10%), <a href="https://guide.lu4lab.com/classes/skill/994-rush/1" class="sk">Rush</a>; Heavy <i>and</i> Light mastery equal. No balance changes since launch.</td><td data-l="Role">Puller and main AoE.</td><td data-l="View">Benchmark AoE farmer; "top-2 damage after a fully-invested Destroyer" with gear, "average" without. <span class="tag opinion">opinion</span></td></tr>
+<tr class="polearm"><td class="k">Destroyer (Дестр)</td><td data-l="AoE / pull"><a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a>; <a href="https://guide.lu4lab.com/classes/skill/31179-full-swing/1" class="sk">Full Swing</a> gives a 2H sword +3…+6 targets too.</td><td data-l="Unique"><a href="https://guide.lu4lab.com/classes/skill/176-frenzy/3" class="sk">Frenzy</a> 32: +54…+131% P.Atk with sword/blunt/polearm <i>below 30% HP</i>; <a href="https://guide.lu4lab.com/classes/skill/190-fatal-strike/7" class="sk">Fatal Strike</a>, <a href="https://guide.lu4lab.com/classes/skill/260-hammer-crush/33" class="sk">Hammer Crush</a> (2H). <a href="https://guide.lu4lab.com/classes/skill/25291-charge/1" class="sk">Charge</a> (no delay since 26 Aug).</td><td data-l="Role">Polearm on pulls, 2H on bosses — carry both.</td><td data-l="View">Good PvE, "little PvP potential". <span class="tag opinion">opinion</span></td></tr>
+<tr class="polearm"><td class="k">Bounty Hunter (Спойлер)</td><td data-l="AoE / pull"><a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a>, <a href="https://guide.lu4lab.com/classes/skill/997-crushing-strike/13" class="sk">Crushing Strike</a> (AoE, −10% P/M.Def), <b><a href="https://guide.lu4lab.com/classes/skill/302-spoil-festival/8" class="sk">Spoil Festival</a> + <a href="https://guide.lu4lab.com/classes/skill/444-sweeper-festival/1" class="sk">Sweeper Festival</a> 28</b> (mass spoil/sweep).</td><td data-l="Unique"><a href="https://guide.lu4lab.com/classes/skill/254-spoil/7" class="sk">Spoil</a> + <a href="https://guide.lu4lab.com/classes/skill/42-sweeper/1" class="sk">Sweeper</a> at 10 (official channel: sweep from 12), <a href="https://guide.lu4lab.com/classes/skill/28106-coin-flipping/3" class="sk">Coin Flipping</a> (random party buff), <a href="https://guide.lu4lab.com/classes/skill/998-blazing-boost/1" class="sk">Blazing Boost</a> (gap-closer).</td><td data-l="Role">Third spear and the group's bank.</td><td data-l="View">Weak solo after 30–40; not an issue inside an AoE party. <span class="tag opinion">opinion</span></td></tr>
+<tr><td class="k">Warsmith (Кузнец)</td><td data-l="AoE / pull"><a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a>, <a href="https://guide.lu4lab.com/classes/skill/1561-battle-cry/1" class="sk">Battle Cry</a>.</td><td data-l="Unique"><a href="https://guide.lu4lab.com/classes/skill/24308-mass-hardened-weapons/1" class="sk">Mass Hardened Weapons</a>/Armor, golems, crafting.</td><td data-l="Role">Not in our party.</td><td data-l="View">"Great in mixed groups"; crafter. <span class="tag opinion">opinion</span></td></tr>
+</tbody></table></div>
+<p class="src"><span class="tag fact">fact</span> <a href="https://guide.lu4lab.com/classes/class/3-warlord">Warlord tree</a> · <a href="https://guide.lu4lab.com/classes/class/46-destroyer">Destroyer</a> · <a href="https://guide.lu4lab.com/classes/class/55-bountyhunter">BH</a> · <a href="https://t.me/lu4cwo/1636">@lu4cwo/1636</a> · opinions: <a href="https://mw5.community/topic/219030-voprosy-po-vl-u/">Warlord thread</a>, <a href="https://mw5.community/topic/219065-kem-posovetuyte-startanut-na-novom-luche-tut-1yy-raz/">starter thread</a>, <a href="https://mw5.community/topic/218981-podskazhite-po-situatsii-s-klassami/">class thread</a>, Jul 2026</p>
+
+<div class="two">
+<div>
+<h3>Warlord by level</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Lvl</th><th>Gains</th></tr></thead>
+<tbody>
+<tr><td class="k">20–39</td><td data-l="Gains"><a href="https://guide.lu4lab.com/classes/skill/216-polearm-mastery/45" class="sk">Polearm Mastery</a> 1 (+3 targets), <a href="https://guide.lu4lab.com/classes/skill/245-wild-sweep/15" class="sk">Wild Sweep</a>, <a href="https://guide.lu4lab.com/classes/skill/78-war-cry/1" class="sk">War Cry</a>, <a href="https://guide.lu4lab.com/classes/skill/121-battle-roar/10" class="sk">Battle Roar</a> 28, <a href="https://guide.lu4lab.com/classes/skill/994-rush/1" class="sk">Rush</a> 30, <a href="https://guide.lu4lab.com/classes/skill/287-lionheart/3" class="sk">Lionheart</a> 36</td></tr>
+<tr><td class="k">40</td><td data-l="Gains"><a href="https://guide.lu4lab.com/classes/skill/216-polearm-mastery/45" class="sk">Polearm Mastery</a> 9 (+6), H/L Armor Mastery 14, <a href="https://guide.lu4lab.com/classes/skill/920-power-crush/37" class="sk">Power Crush</a>, <a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a>, <a href="https://guide.lu4lab.com/classes/skill/48-thunder-storm/37" class="sk">Thunder Storm</a>, <a href="https://guide.lu4lab.com/classes/skill/317-focus-attack/5" class="sk">Focus Attack</a>, <a href="https://guide.lu4lab.com/classes/skill/290-final-frenzy/1" class="sk">Final Frenzy</a></td></tr>
+<tr><td class="k">43 / 46</td><td data-l="Gains"><b><a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a></b>, <a href="https://guide.lu4lab.com/classes/skill/116-howl/14" class="sk">Howl</a> (−15% P/M.Atk), <a href="https://guide.lu4lab.com/classes/skill/211-boost-hp/10" class="sk">Boost HP</a> / <a href="https://guide.lu4lab.com/classes/skill/31441-quick-spear/9" class="sk">Quick Spear</a> (5 s stun), <a href="https://guide.lu4lab.com/classes/skill/181-revival/3" class="sk">Revival</a>, <a href="https://guide.lu4lab.com/classes/skill/130-thrill-fight/2" class="sk">Thrill Fight</a></td></tr>
+<tr><td class="k">52 / 55</td><td data-l="Gains"><a href="https://guide.lu4lab.com/classes/skill/12059-thunder-move/2" class="sk">Thunder Move</a>, <a href="https://guide.lu4lab.com/classes/skill/31178-warlord-frenzy/3" class="sk">Warlord Frenzy</a>, <a href="https://guide.lu4lab.com/classes/skill/430-master-of-combat/3" class="sk">Master of Combat</a> / <b><a href="https://guide.lu4lab.com/classes/skill/452-shock-stomp/5" class="sk">Shock Stomp</a></b>, <a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a> 2</td></tr>
+<tr><td class="k">58 / 60</td><td data-l="Gains"><b><a href="https://guide.lu4lab.com/classes/skill/421-fell-swoop/5" class="sk">Fell Swoop</a>, <a href="https://guide.lu4lab.com/classes/skill/422-polearm-accuracy/3" class="sk">Polearm Accuracy</a>, <a href="https://guide.lu4lab.com/classes/skill/424-war-frenzy/3" class="sk">War Frenzy</a></b> / <b><a href="https://guide.lu4lab.com/classes/skill/31177-dreadnought-spirit/2" class="sk">Dreadnought Spirit</a></b>, <a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a> 3</td></tr>
+<tr><td class="k">62–74</td><td data-l="Gains"><a href="https://guide.lu4lab.com/classes/skill/320-wrath/10" class="sk">Wrath</a> 62, <a href="https://guide.lu4lab.com/classes/skill/347-earthquake/4" class="sk">Earthquake</a> + <a href="https://guide.lu4lab.com/classes/skill/440-braveheart/1" class="sk">Braveheart</a> 68, <a href="https://guide.lu4lab.com/classes/skill/339-parry-stance/1" class="sk">Parry Stance</a> 70; Mastery 45 (+10) at 74</td></tr>
+<tr><td class="k">75</td><td data-l="Gains"><a href="https://guide.lu4lab.com/classes/skill/917-final-secret/1" class="sk">Final Secret</a>, <a href="https://guide.lu4lab.com/classes/skill/361-shock-blast/1" class="sk">Shock Blast</a> (3.5M SP)</td></tr>
+</tbody></table></div>
+</div>
+<div>
+<h3>Polearm mechanics vs. retail</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Mechanic</th><th>LU4</th></tr></thead>
+<tbody>
+<tr><td class="k">Targets/swing</td><td data-l="LU4">1 + Mastery (+3/+6/+10) + SA polearm (+2 or +4) + <a href="https://guide.lu4lab.com/classes/skill/421-fell-swoop/5" class="sk">Fell Swoop</a> (+1…+5).</td></tr>
+<tr><td class="k">A-grade SAs</td><td data-l="LU4">Attack Angle +60°, 25% stun, Atk.Spd +6% options; any A-weapon SA +5% PvP dmg. <a href="https://mw5.community/topic/218684-patchnote-220626-liberta-ultimata-alpha-1-gamma-update-2/">Gamma #2</a></td></tr>
+<tr><td class="k">AoE caps</td><td data-l="LU4">Damage AoE skills capped at 12–16 targets in PvP <i>and</i> PvE; pure debuffs uncapped. <a href="https://t.me/lu4cwo/1099">@lu4cwo/1099</a></td></tr>
+<tr><td class="k">Over-hit</td><td data-l="LU4">Physical skills incl. <a href="https://guide.lu4lab.com/classes/skill/920-power-crush/37" class="sk">Power Crush</a> can over-hit; min +25% XP.</td></tr>
+<tr><td class="k">Hidden stats</td><td data-l="LU4">Polearm crit 8, spread 10%, accuracy −3.75. Side +20% acc/crit, back +30%. <a href="https://guide.lu4lab.com/mechanics.html">mechanics</a></td></tr>
+</tbody></table></div>
+</div>
+</div>
+</div>
+</details>
+</section>
+
+<!-- ===================== 4. TIERS ===================== -->
+<section class="block" id="tiers">
+<details>
+<summary><span class="num">3</span><h2>Tier-list consensus</h2></summary>
+<div class="body tight">
+<p>Built from Jun–Sep 2026 forum threads and one clan-leader podcast; no official ranking exists and everything here is player opinion. "—" = nobody ranked it. Slang: «ВК/варк» = <b>Warcryer</b>, «ВЛ» = Warlord.</p>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Class</th><th>Solo PvE</th><th>Party PvE</th><th>PvP</th><th>Siege</th><th>Notes</th><th>Source &amp; date</th></tr></thead>
+<tbody>
+<tr class="polearm"><td class="k">Warlord</td><td data-l="Solo PvE" class="r tier-B">B+</td><td data-l="Party PvE" class="r tier-A">A*</td><td data-l="PvP" class="r tier-x">—</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">Benchmark AoE farmer ("any Warlord or Destroyer will out-farm you"). Endgame: "top-2 damage after a fully-invested Destroyer" <i>with</i> full buffs and a top weapon, else "average"; counter-view: "чмошник из-за онлайна" — only worth it with heavy play-time. Mass PvP "depends". *conditional on gear.</td><td data-l="Source & date"><span class="tag opinion">opinion</span> <a href="https://mw5.community/topic/219030-voprosy-po-vl-u/">"Вопросы по вл-у"</a>, Jul 2026 · <a href="https://mw5.community/topic/218758-opyat-pro-sumovvopros-administratsii/">summoner thread</a>, Jun 2026</td></tr>
+<tr class="polearm"><td class="k">Destroyer</td><td data-l="Solo PvE" class="r tier-A">A</td><td data-l="Party PvE" class="r tier-A">A</td><td data-l="PvP" class="r tier-C">C</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">Top single-target PvE DD; weak PvP.</td><td data-l="Source & date"><span class="tag opinion">opinion</span> <a href="https://mw5.community/topic/219065-kem-posovetuyte-startanut-na-novom-luche-tut-1yy-raz/">starter thread</a>, Jul 2026</td></tr>
+<tr class="polearm"><td class="k">Bounty Hunter</td><td data-l="Solo PvE" class="r tier-C">C</td><td data-l="Party PvE" class="r tier-B">B</td><td data-l="PvP" class="r tier-B">B</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"Relevant until 30–40" solo; 19/181 in &lt;40 PvP poll. Economy role.</td><td data-l="Source & date"><span class="tag opinion">opinion</span> <a href="https://mw5.community/topic/218981-podskazhite-po-situatsii-s-klassami/">class thread</a> · <a href="https://t.me/lu4cwo/1498">poll</a>, Aug 2026</td></tr>
+<tr class="polearm"><td class="k">Warsmith</td><td data-l="Solo PvE" class="r tier-C">C</td><td data-l="Party PvE" class="r tier-A">A</td><td data-l="PvP" class="r tier-x">—</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">Dungeon AoE fine; crafter.</td><td data-l="Source & date"><span class="tag opinion">opinion</span> class thread</td></tr>
+<tr><td class="k">Gladiator / Tyrant</td><td data-l="Solo PvE" class="r tier-B">B / A</td><td data-l="Party PvE" class="r tier-A">A</td><td data-l="PvP" class="r tier-S">S/A</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"Gladiator is one of the strongest classes, on par with Tyrant"; Glad "imba" for a duo starter (Mutabor); Glad/Sorc "CP professions" for solo.</td><td data-l="Source & date"><span class="tag consensus">consensus</span> <a href="https://t.me/lu4cwo/751">CL podcast</a>, Jan 2026 <span class="tag opinion">Jan 2026</span> · class thread · starter thread, Jul 2026</td></tr>
+<tr><td class="k">Daggers</td><td data-l="Solo PvE" class="r tier-A">A</td><td data-l="Party PvE" class="r tier-x">—</td><td data-l="PvP" class="r tier-A">A/B</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"Very strong in all aspects, buffed in the update"; dual daggers favoured through the 40s.</td><td data-l="Source & date"><span class="tag consensus">consensus</span> starter thread, Jul 2026 · <a href="https://mw5.community/topic/219795-startuyu-za-dagerv/">dagger thread</a>, Aug 2026</td></tr>
+<tr><td class="k">Archers</td><td data-l="Solo PvE" class="r tier-x">—</td><td data-l="Party PvE" class="r tier-x">—</td><td data-l="PvP" class="r tier-C">C (&lt;40)</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">Weakest in poll; buffed 26 Aug.</td><td data-l="Source & date"><span class="tag opinion">opinion</span> poll</td></tr>
+<tr><td class="k">Dark mages / Necro</td><td data-l="Solo PvE" class="r tier-S">S/A</td><td data-l="Party PvE" class="r tier-A">A</td><td data-l="PvP" class="r tier-S">S (&lt;40)</td><td data-l="Siege" class="r tier-A">A (implied)</td><td data-l="Notes">Necro "best solo pick"; mages won the &lt;40 poll (70/181), "drive everything", but "two hits and the mage is dead".</td><td data-l="Source & date"><span class="tag consensus">consensus</span> starter thread · <a href="https://mw5.community/topic/218646-o-tankah/">tank thread</a>, Jun 2026 · <a href="https://t.me/lu4cwo/751">CL podcast</a></td></tr>
+<tr><td class="k">Terramancer</td><td data-l="Solo PvE" class="r tier-x">—</td><td data-l="Party PvE" class="r tier-x">—</td><td data-l="PvP" class="r tier-x">—</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">New class; too few players at cap for a verdict.</td><td data-l="Source & date"><a href="https://t.me/lu4cwo/1333">@lu4cwo/1333</a></td></tr>
+<tr><td class="k">Summoners (non-Necro)</td><td data-l="Solo PvE" class="r tier-C">C</td><td data-l="Party PvE" class="r tier-C">C</td><td data-l="PvP" class="r tier-C">C</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"Most useless"; −30% PvP dmg; buffed 7 Sep (Servitor Share 70%).</td><td data-l="Source & date"><span class="tag consensus">consensus</span> Jun–Jul threads</td></tr>
+<tr><td class="k">Tanks (Pal/TK/SK/DA)</td><td data-l="Solo PvE" class="r tier-B">B</td><td data-l="Party PvE" class="r tier-A">A</td><td data-l="PvP" class="r tier-A">A (Pal)</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"All relevant"; Paladin best, SK for PvE, DA weakest late. Always find parties.</td><td data-l="Source & date"><span class="tag consensus">consensus</span> <a href="https://mw5.community/topic/219062-kakoy-luchshiy-tank-na-luche/">tank threads</a>, Jul 2026</td></tr>
+<tr><td class="k">SE / Bishop / EE</td><td data-l="Solo PvE" class="r tier-x">—</td><td data-l="Party PvE" class="r tier-S">S</td><td data-l="PvP" class="r tier-x">—</td><td data-l="Siege" class="r tier-x">—</td><td data-l="Notes">"A live SE is imba in random parties"; SE has an attack-speed buff (<a href="https://guide.lu4lab.com/classes/skill/25239-improved-rampage/10" class="sk">Improved Rampage</a> — players call it "haste"); healers always invited.</td><td data-l="Source & date"><span class="tag consensus">consensus</span> <a href="https://mw5.community/topic/218981-podskazhite-po-situatsii-s-klassami/">class thread</a> · <a href="https://mw5.community/topic/219026-moy-pervyy-sapport-kto-on/">support thread</a>, Jul 2026</td></tr>
+<tr><td class="k">PP / WC / OL / bards</td><td data-l="Solo PvE" class="r tier-x">—</td><td data-l="Party PvE" class="r tier-A">A/B</td><td data-l="PvP" class="r tier-x">—</td><td data-l="Siege" class="r tier-A">A (OL)</td><td data-l="Notes">PP "best buff box"; WC "the secret leader" as an assist box (never out of mana); OL strong but CP-only; bards limited before 40. Buffers struggle to find random parties.</td><td data-l="Source & date"><span class="tag consensus">consensus</span> support thread · dagger thread, Aug 2026 · class thread</td></tr>
+</tbody></table></div>
+</div>
+</details>
+</section>
+
+<!-- ===================== 5. ROUTE ===================== -->
+<section class="block" id="leveling">
+<details open>
+<summary><span class="num">4</span><h2>Leveling &amp; AoE route</h2></summary>
+<div class="body tight">
+<div class="kv three">
+<div><b>Fatigue budget (7–13 Sep)</b>Black/White/Carmine <b>10M XP/day</b> per character → 12.5M → 16M → 20M → 24M by 5 Oct. Gamma 70M. <a href="https://mw5.community/topic/220168-patchnout-070926-liberta-ultimata-alpha-1-global-update-13/">#13</a></div>
+<div><b>XP level gap</b>Full XP −5…+4; then +5: −15%, +6: −30%, +7: −50%, +8: −65%, +9: −80%, +10: −90%, +11: −95% (mirrored below). <a href="https://mw2.wiki/posts/post/34-gaining-experience-and-penalties">wiki</a></div>
+<div><b>Party XP</b>2: 110% · 3: 125% · 4: 140% · <b>5: 150%</b> · 6: 180% · 7: 210% · 8: 240% · 9: 270%, then divided. A 6th client = +30 points.</div>
+<div><b>Death</b>PvE −1% · PvP −0.2% · killed by a PK −2% · dying PK-flagged −4%. Noblesse = 20-min alchemy scroll. <a href="https://mw5.community/topic/220013-patchnote-240826-liberta-ultimata-alpha-1-global-update-11/">#11</a></div>
+<div><b>Zone types</b><b>S</b> 1–2 chars · <b>SG</b> 3–5, "social aggression" · <b>G</b> 6–9, stronger mobs, better rewards. +1,731 mobs added to 71 zones lvl 1–45 (Jul 2026). <a href="https://mw5.community/topic/214963-lu4-locations/">Locations</a> · <a href="https://mw5.community/topic/219382-patchnote-270726-liberta-ultimata-alpha-1-gamma-update-7/">Gamma #7</a></div>
+<div><b>Other XP</b>Clan Unity +3–5% with 8+ online · treasure chests: 10 XP-chests per type per day · Assist Manager 150 min/day (180 Premium) · quest XP bypasses fatigue.</div>
+</div>
+<div class="callout good"><span class="t">Daily loop</span> Green bar → biggest social pull zone for the bracket, BH sweeps every pack (BH within −4…+3 of the mobs and close to the Warlord's level). Yellow → quest turn-ins and repeatables (fatigue-free), treasure chests, Assist-Manager minutes on the boxes. Sell reagent boxes and spoil; bank coins toward the Poleaxe part (Coins of Magic) → Orcish Poleaxe C and Lance B recipes (need <i>both</i> Coins of Magic and Kail's).</div>
+
+<h3>Route by bracket</h3>
+<p class="src">"LU4-confirmed" = stated by a LU4 source; "Retail hint" = what those mobs spoil on retail Interlude, unverified here. Guides: <a href="https://t.me/lu4cwo/1086">1–40</a>, <a href="https://t.me/lu4cwo/1089">40–60</a> · zone test <a href="https://t.me/lu4cwo/561">@lu4cwo/561</a> · BH blog <a href="https://l2spoilway.ru/tag/lu4/">l2spoilway</a> (2025).</p>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Levels</th><th>Pull zones (type · mob lvl)</th><th>LU4-confirmed spoil / drop</th><th>Retail hint</th><th>Quests to run</th></tr></thead>
+<tbody>
+<tr><td class="k">1–20</td><td data-l="Pull zones">Ruins of Agony/Despair (S 15–25, skeleton/zombie packs) · Cave of Trials (SG/G 15–22, "to ~23") · Elven Ruins/Fortress (SG/G 10–24). No D loot below mob 21.</td><td data-l="LU4 spoil">Western Mining shore goblins → Varnish, Coal, Animal Bone; Fellmere bears → resources. Ruins of Agony = Tier-D reagent zone.</td><td data-l="Retail hint">Ruin skeletons/spartoi → Animal Bone, Iron Ore, Varnish, Coal.</td><td data-l="Quests">Grim Collector 15–26 (~300 adena per assembled skeleton) — the adena engine. <a href="https://lu4db.ru/quests/299">lu4db</a></td></tr>
+<tr><td class="k">20–30</td><td data-l="Pull zones">Abandoned Camp (SG 19–28) → <b>Orc Barracks</b> (SG/G 24–34, social Turek packs) → Partisan Hideaway (SG/G 24–34).</td><td data-l="LU4 spoil">Ol Mahum Supplier 23 → Iron Ore; General 26 → Iron Ore, Varnish. Immortal Plateau South (S/SG 10–24): Kasha Dire Wolf 23 → Stone of Purity, CBP; Baar Dre Vanul Destroyer 25 → Oriharukon Ore. Turek Orc Supplier → D shot recipe. <span class="tag opinion">BH blog</span></td><td data-l="Retail hint">Turek orcs → Varnish, Coal, Iron Ore, Steel, Cokes.</td><td data-l="Quests">Red-Eyed Invaders 20–28 (~300k XP), Recover the Farmland 25–34, Hunt of the Black Lion 25–39 (rep.), Dragon Fangs / Acts of Evil (D rewards). <a href="https://lu4db.ru/quests/322">lu4db</a></td></tr>
+<tr><td class="k">30–40</td><td data-l="Pull zones">Forgotten Temple (SG/G 28–35) → Cruma Marshlands (S 25–37, social stakato) → <b>Ant Nest</b> (S/SG 30–42, social ants) → Windy Hill (SG/G 36–39: spirits 4–5× HP, high M.Def, "unreal amount of mobs"). <a href="https://t.me/s/origamiL2?q=Windy">Origami</a></td><td data-l="LU4 spoil">Marsh Spider 34 → SoEW D 0.20%; Bloody Axe Elite 35 → SoEA D 0.65%; Hatu Dire Wolf 34 → SoEA D 0.62%. <a href="https://guide.lu4lab.com/quests-20-39.html">lu4lab</a></td><td data-l="Retail hint">Ants → Coal, Cokes, Varnish, Stem, Steel.</td><td data-l="Quests">Leto Lizardmen 34–39 → Animal Skin/Bone, Varnish, Iron Ore; <b>Black Swan</b> 34–41 → bills for Coal, Cokes, Stone of Purity, Oriharukon, Crafted Leather, Synthetic Cokes, Varnish of Purity; Song of the Hunter rank 1 (30+); Temple Executor chain 35–45 (+1 PoL). <a href="https://lu4db.ru/quests/331">lu4db</a></td></tr>
+<tr class="polearm"><td class="k">40–48</td><td data-l="Pull zones"><b>Cruma Tower</b> (G 40–52) ↔ <b>Garden of Eva</b> (G 40–53; Gamma test 2.5–3M adena/h, "recipes and rare resources in spoil") ↔ Tanor Canyon (S/SG 44–52, social Silenos) ↔ Sea of Spores (S/SG 40–50). Official guide: Cruma, EV, DV = "fat mobs… tasty drop/spoil". AoE kit online.</td><td data-l="LU4 spoil"><b>Coins of Magic</b> from every listed mob: Timak Orcs 41–45, Blade Stakato/Water Giant 41–45, Rotting Tree/Golem, Trisalim 43–46, Nightmare Guide/Keeper, Tanor Shaman 43–48, Formor/Tarlk Bugbear 45–47 (rank III→II 20 each, II→I 200 each). Timak Archer 41 → Plated Leather Shirt recipe; Timak Shaman 44 → Stone of Purity ~7%. <a href="https://lu4db.ru/quests/370">lu4db</a></td><td data-l="Retail hint">Cruma golems → Cokes, Adamantite, Varnish of Purity, Mithril Ore, Metallic Fiber, Enria, Asofe, Thons; Eva stakato → Steel, Stone of Purity, Crafted Leather.</td><td data-l="Quests">Alligator Island 38–49 (100 adena/tooth + 16k/39k/97k at 150/300/600) + Alligator Hunter 40–47 (C gear); Kusto chain 40–45; Ivory Tower 40–47. <a href="https://lu4db.ru/quests/344">lu4db</a></td></tr>
+<tr class="polearm"><td class="k">48–56</td><td data-l="Pull zones"><b>Devil's Isle upper floor</b> (SG/G 42–58, "easy pull"; Low-B RBs 52–56) ↔ Garden of Eva (adena) ↔ <b>Forest of Mirrors</b> (40–58; density buffed 7 Sep) ↔ Enchanted Valley (SG/G 44–58; lvl-49 party 10M XP in 2.5 h; trees spoil Valhalla B parts) ↔ Dragon Valley gargoyles (21-mob easy pull, poor loot, PvP-heavy).</td><td data-l="LU4 spoil"><b>Kail's coins</b> (Outlaw Forest 49–59 / DV; "high potential for spellbooks"): Tarlk Basilisk 50–51, Hunter Gargoyle 52, Oel Mahum 53–54, Witch Doctor 55 → Orcish Poleaxe C and Lance B recipes. Taik Orc Warrior (FoM) → Steel ~12%. Devil's Isle → C weapon parts, Elven Mithril parts, jewelry parts, B items. B parts only from mobs 56+. <a href="https://lu4db.ru/quests/373">lu4db</a></td><td data-l="Retail hint">Cave Servants → Mithril Alloy, Oriharukon, Enria; Headless Knight → Asofe, Thons, Durable Metal Plate; Oel Mahum → Compound Braid.</td><td data-l="Quests">Devil's Legacy 39–56 → chests: Steel, Stone of Purity, Crafted Leather, Durable Metal Plate, Synthetic Cokes, SoEW C/B. Song of the Hunter rank 2/3. <a href="https://lu4db.ru/quests/346">lu4db</a></td></tr>
+<tr><td class="k">56–65</td><td data-l="Pull zones"><b>Cemetery</b> (S/SG 56–65; at night since 31 Aug mobs ×3–4 stronger, wider aggro, more spawns, "improved resource drop" — day for safety, night for loot) · Enchanted Valley upper · Dragon Valley deep · Lair of Antharas (G 60–68, PvP-heavy) · Fields of Massacre from 62. G zones are held by full clans — bring recruited supports (§7).</td><td data-l="LU4 spoil">Cemetery/ToI = Tier-B reagent zones. Low-B RB pool 52–56.</td><td data-l="Retail hint">Cemetery undead/orcs → Mithril Alloy, Oriharukon, Asofe, Thons, Enria, Durable Metal Plate.</td><td data-l="Quests">Song of the Hunter rank 4 (60+). <a href="https://mw5.community/topic/220089-patchnout-310826-liberta-ultimata-alpha-1-global-update-12/">#12</a></td></tr>
+<tr><td class="k">65–75</td><td data-l="Pull zones">Blazing Swamp (68–74) · Giant's Cave level 0 (G 67–70) · Tower of Insolence · Ancient Battleground (G 72–75) · Silent Valley (G 75). A loot only from mobs 66+.</td><td data-l="LU4 spoil">Blazing Swamp = Tier-A reagent zone.</td><td data-l="Retail hint">—</td><td data-l="Quests">The six A-grade quests (§6) are the guaranteed path.</td></tr>
+</tbody></table></div>
+</div>
+</details>
+</section>
+
+<!-- ===================== 6. REPEATABLES ===================== -->
+<section class="block" id="quests">
+<details>
+<summary><span class="num">5</span><h2>Repeatables &amp; dailies</h2></summary>
+<div class="body tight">
+<p class="src">Bracket quests are in the route table. These run alongside any bracket; all fatigue-free. <span class="tag fact">fact</span></p>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Activity</th><th>Levels</th><th>Where</th><th>Gives</th></tr></thead>
+<tbody>
+<tr><td class="k">Hunt of the Black Lion</td><td data-l="Levels">25–39</td><td data-l="Where">Partisan / Execution Grounds / Cruma Marsh</td><td data-l="Gives">Adena, consumables (rep.)</td></tr>
+<tr><td class="k">Song of the Hunter</td><td data-l="Levels">30–65 (ranks 30/40/50/60)</td><td data-l="Where">Hunters Village</td><td data-l="Gives">Hunter certificates → shop</td></tr>
+<tr><td class="k">Coins of Magic</td><td data-l="Levels">40–60</td><td data-l="Where">Sorint, Hunters Village; mobs in §4</td><td data-l="Gives">C armor, Poleaxe part, B recipes</td></tr>
+<tr><td class="k">Kail's Magic Coin</td><td data-l="Levels">48–60</td><td data-l="Where">Vergara, Hunters Village; Outlaw Forest / DV</td><td data-l="Gives">Orcish Poleaxe C, Lance B recipes</td></tr>
+<tr><td class="k">Alligator Island</td><td data-l="Levels">38–49</td><td data-l="Where">Heine</td><td data-l="Gives">Adena tiers 16k/39k/97k</td></tr>
+<tr><td class="k">Warehouse Keeper's Pastime</td><td data-l="Levels">40–52</td><td data-l="Where">Oren</td><td data-l="Gives">Materials → C gear</td></tr>
+<tr><td class="k">Enhance Your Weapon</td><td data-l="Levels">40+ (per login)</td><td data-l="Where">—</td><td data-l="Gives">Soul crystals; level them in Antharas Lair, Devil's Isle, Timak, FoM, Giant's Cave, Forest of Mirrors</td></tr>
+<tr><td class="k">Treasure chests</td><td data-l="Levels">any</td><td data-l="Where">Random world spawns (Common/Uncommon/Rare)</td><td data-l="Gives">Adena, XP (10 per type/day), parts, recipes, Life Stones; keys from mob-drop recipes</td></tr>
+<tr><td class="k">Alchemy</td><td data-l="Levels">20+ (dwarves 5+)</td><td data-l="Where">Sa Izzuruk, Gludin swamp; reagents from "Reagent Carrier" mobs in 67 zones; Ashen Sigil 100k to start</td><td data-l="Gives">XP scrolls +10–15%, buff/hunting oils, Noblesse scrolls (20 min), A-armor unsealing. <a href="https://mw5.community/topic/219910-patchnote-170826-liberta-ultimata-alpha-1-global-update-10/">#10</a></td></tr>
+<tr><td class="k">Bosses</td><td data-l="Levels">by pool</td><td data-l="Where">D RBs 4–8 h; C pools 40–49; Low-B pool 52–56 (since 7 Sep); epics QA/Core/Orfen lvl 55 on new servers</td><td data-l="Gives">Gear, PoL, SA levels</td></tr>
+<tr><td class="k">Clan halls / sieges</td><td data-l="Levels">clan</td><td data-l="Where">Fortress of Resistance Thu 20:00; castles Sun 18:00 bi-weekly</td><td data-l="Gives">Buffs (castle: CP +10%, heal +5%, CC resist +5%)</td></tr>
+</tbody></table></div>
+</div>
+</details>
+</section>
+
+<!-- ===================== 7. GEAR ===================== -->
+<section class="block" id="gear">
+<details>
+<summary><span class="num">6</span><h2>Gear, weapons &amp; dyes</h2></summary>
+<div class="body tight">
+<h3>Polearms by grade</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Grade</th><th>How to get it</th></tr></thead>
+<tbody>
+<tr><td class="k">NG → D</td><td data-l="How">Merchant upgrade chains (NG 4 stages, D 5 stages); 1st-profession coupon turns Top-NG into a Low-D weapon of your choice — pick spear. SA on D from stage 3. </td></tr>
+<tr><td class="k">C</td><td data-l="How">NPC shop / craft / C RBs. Coins of Magic: Poleaxe part. Kail's: 100% Orcish Poleaxe recipe (350k + 350 of each coin). Quests Alligator Hunter (40–47), Thousand Years: End of Lamentation (48–55) give random C weapons.</td></tr>
+<tr><td class="k">B</td><td data-l="How">No NPC shop — craft/drop. Kail's: Lance 60% (1M + 450 CoM / 650 Kail's each) … 100% (1.25M + 600/800). Seductive Whispers (50+) random B part/recipe. Low-B RB pool 52–56. <a href="https://lu4db.ru/quests/373">lu4db</a></td></tr>
+<tr><td class="k">A (64–75)</td><td data-l="How"><b>Halberd</b> Low-A (rare: P.Crit +15%) · <b>Tallum Glaive</b> Mid-A 282/114 (rare: HP +10%) · <b>Typhon's Spear</b> Top-A 335/121 (rare: Atk.Spd +5%). SAs: Atk.Spd +6% / Angle +60° / 25% stun; SA costs 170/260/400 Gemstone A by grade. Sources: ToI, Giant's Cave lower, Ancient Battleground, Low-A RBs 62–67, epics, quests Relics of the Fallen (FoM 63–75), Sealed Archives I/II (ToI 64–75 / 70–75), Finds from the Giant's Cave (65–75), Ember Crucible (Blazing Swamp 66–75), Banners of the Ancient Battleground (70–75). Top-A RBs Nov/Dec. <a href="https://mw5.community/topic/218684-patchnote-220626-liberta-ultimata-alpha-1-gamma-update-2/">Gamma #2</a></td></tr>
+</tbody></table></div>
+
+<div class="two">
+<div>
+<h3>Armor sets that matter</h3>
+<p class="src">Warlord has Heavy and Light mastery at equal levels. A armor comes sealed: alchemy catalyst + 810k–990k adena (#11) or a player-blacksmith fee (#10).</p>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Grade</th><th>Heavy</th><th>Light</th></tr></thead>
+<tbody>
+<tr><td class="k">C</td><td data-l="Heavy"><b>Full Plate</b>: STR +1, HP +270, Vampiric +4%. Chain Mail: DEX +2, P.Def +6%. Dwarven Chain: CON +3.</td><td data-l="Light"><b>Plated Leather</b>: STR +4, CON −1. <b>Rind Leather</b>: STR +2, Atk.Spd +4%. Theca: DEX +2, P.Def +6%.</td></tr>
+<tr><td class="k">B</td><td data-l="Heavy">Doom Plate / Blue Wolf heavy — bonuses in the in-game wiki</td><td data-l="Light">Doom Light / Blue Wolf light — in-game wiki</td></tr>
+<tr><td class="k">A</td><td data-l="Heavy"><b>Majestic Plate</b>: STR +2, P.Atk +8%, <b>Acc +5</b>, stun resist +50%. Tallum Plate: STR +2, Atk.Spd +8%. Nightmare: CON +2, HP +380, P/M.Def +6%.</td><td data-l="Light"><b>Dark Crystal Leather</b>: STR +1, DEX +1, Atk.Spd +4%, P.Atk +4%. Nightmare Leather: DEX +2, skill evasion +5%, Vampiric +3%.</td></tr>
+</tbody></table></div>
+<p class="src"><span class="tag retail">inference</span> Puller: Full Plate → Majestic Plate. Others: Plated Leather → Dark Crystal Leather. Sources: <a href="https://guide.lu4lab.com/armor-sets-data.json">lu4lab sets</a> · <a href="https://mw5.community/topic/218948-patchnote-060726-liberta-ultimata-alpha-1-gamma-update-4/">Gamma #4</a></p>
+</div>
+<div>
+<h3>Dyes (тату)</h3>
+<div class="kv">
+<div><b>Slots</b>1 at 20; 2 with 1st profession (+1/−1); 3 at 40 with 2nd profession (+4/−4). Cap <b>+5 per stat</b>. 1st-prof dyes deactivate at the 2nd profession.</div>
+<div><b>Cost / where</b>+1/−1 4,800–37,800 adena; +4/−4 64,800. Dye Master in Giran/Gludin magic shops. <a href="https://guide.lu4lab.com/tattoo.html">lu4lab</a></div>
+<div><b>Official advice (31 Aug)</b>Glad/Tyrant: STR at the cost of DEX (farm) or CON (PvP); also covers mages, tanks, bards, dwarves — "don't blindly copy". <a href="https://t.me/lu4cwo/1682">@lu4cwo/1682</a></div>
+<div><b>For us</b><span class="tag retail">retail</span> +STR −CON/−DEX; +CON for the puller; remember the −3.75 polearm accuracy.</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+</section>
+
+
+<!-- ===================== 9. PARTY ===================== -->
+<section class="block" id="party">
+<details open>
+<summary><span class="num">7</span><h2>Our party</h2></summary>
+<div class="body tight">
+<div class="two">
+<div>
+<div class="comp">
+<div class="slot p">Warlord<br><small>puller · <a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a></small></div>
+<div class="slot p">Bounty Hunter<br><small>Mitch · spear + <a href="https://guide.lu4lab.com/classes/skill/302-spoil-festival/8" class="sk">Spoil Festival</a></small></div>
+<div class="slot p">Destroyer<br><small>spear on pulls, 2H on bosses</small></div>
+<div class="slot h">Shillien Elder<br><small>Mitch's box</small></div>
+<div class="slot s">Bladedancer<br><small>Warlord's box</small></div>
+</div>
+<p><b>Why it works:</b> three Polearm Masteries on one <a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a> pull (+6 extra targets each at 40, more with SA and <a href="https://guide.lu4lab.com/classes/skill/421-fell-swoop/5" class="sk">Fell Swoop</a>); the BH's <a href="https://guide.lu4lab.com/classes/skill/254-spoil/7" class="sk">Spoil</a>/Sweeper Festival scales with the AoE, which matters because B-grade has no shop. 5 clients = 150% XP. <b>Pull routine:</b> <a href="https://guide.lu4lab.com/classes/skill/286-provoke/2" class="sk">Provoke</a> → run to party → <a href="https://guide.lu4lab.com/classes/skill/452-shock-stomp/5" class="sk">Shock Stomp</a>/Thunder Storm → Whirlwinds → <a href="https://guide.lu4lab.com/classes/skill/444-sweeper-festival/1" class="sk">Sweeper Festival</a>; <a href="https://guide.lu4lab.com/classes/skill/116-howl/14" class="sk">Howl</a> on big packs; AoE skills cap at 12–16 targets. Boxes follow via Assist Manager.</p>
+</div>
+<div>
+<h3>Supports: what each gives spears</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Support</th><th>Gives spears</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td class="k">Shillien Elder</td><td data-l="Gives"><a href="https://guide.lu4lab.com/classes/skill/1539-stigma-of-shilien/7" class="sk">Stigma of Shilien</a> −12…−40% melee resistance (range 600→900), <a href="https://guide.lu4lab.com/classes/skill/25239-improved-rampage/10" class="sk">Improved Rampage</a> (Atk.Spd), <a href="https://guide.lu4lab.com/classes/skill/1531-blessed-blood/1" class="sk">Blessed Blood</a>, <a href="https://guide.lu4lab.com/classes/skill/1507-lord-of-vampire/2" class="sk">Lord of Vampire</a>, heals, recharge.</td><td data-l="Status">Have (box)</td></tr>
+<tr><td class="k">Bladedancer</td><td data-l="Gives"><a href="https://guide.lu4lab.com/classes/skill/273-rhythm-of-power/7" class="sk">Rhythm of Power</a> +6…+12% P.Atk (40), <a href="https://guide.lu4lab.com/classes/skill/274-rhythm-of-critical/7" class="sk">Rhythm of Critical</a> (44), <a href="https://guide.lu4lab.com/classes/skill/275-rhythm-of-rage/7" class="sk">Rhythm of Rage</a> (46) on the separate 12-slot rhythm bar.</td><td data-l="Status">Have (box)</td></tr>
+<tr><td class="k">Prophet</td><td data-l="Gives"><a href="https://guide.lu4lab.com/classes/skill/1499-improved-combat/10" class="sk">Improved Combat</a> +15% P.Atk/Def, <a href="https://guide.lu4lab.com/classes/skill/27388-mass-greater-might/1" class="sk">Mass Greater Might</a> +10%, <a href="https://guide.lu4lab.com/classes/skill/1240-guidance/1" class="sk">Guidance</a> +2…+4 accuracy — on a −3.75-acc weapon. "Best buff box." No heals.</td><td data-l="Status">Missing — first recruit / 3rd window. <b>Not instead of the SE:</b> Stigma's −12…−40% resistance on every mob beats a flat +15% for three spears, and without the SE the party has no healer or recharge.</td></tr>
+<tr><td class="k">Warcryer</td><td data-l="Gives"><a href="https://guide.lu4lab.com/classes/skill/1229-chant-of-life/16" class="sk">Chant of Life</a>, Protection Spirit (−15% crit dmg taken), Magnus (+20% MP). "The secret leader" as an assist box — never out of mana.</td><td data-l="Status">Missing — alternative to Prophet</td></tr>
+<tr><td class="k">Bishop / EE</td><td data-l="Gives">Real healer, Noblesse; "always invited".</td><td data-l="Status">Recruit for 60+</td></tr>
+</tbody></table></div>
+<p class="src"><span class="tag fact">fact</span> <a href="https://guide.lu4lab.com/support-classes-comparison.html">support comparison</a> · <a href="https://mw5.community/topic/219071-patchnote-130726-liberta-ultimata-alpha-1-gamma-update-5/">Gamma #5</a> · <span class="tag consensus">consensus</span> <a href="https://mw5.community/topic/219030-voprosy-po-vl-u/">Warlord thread</a>, <a href="https://mw5.community/topic/219795-startuyu-za-dagerv/">dagger thread</a>, <a href="https://mw5.community/topic/219026-moy-pervyy-sapport-kto-on/">support thread</a></p>
+</div>
+</div>
+
+<h3>Gaps → fixes</h3>
+<div class="rtwrap"><table class="rt">
+<thead><tr><th>Gap</th><th>Fix</th></tr></thead>
+<tbody>
+<tr><td class="k">No Prophet buffs</td><td data-l="Fix">NPC buffer to 30 · combo-buff books (40+ from mobs) · alchemy oils · <a href="https://guide.lu4lab.com/classes/skill/317-focus-attack/5" class="sk">Focus Attack</a> / <a href="https://guide.lu4lab.com/classes/skill/422-polearm-accuracy/3" class="sk">Polearm Accuracy</a>. Real fix: 4th friend or 3rd window on Prophet/Warcryer → also 180% party XP.</td></tr>
+<tr><td class="k">Boxed healer</td><td data-l="Fix">Keep <a href="https://guide.lu4lab.com/classes/skill/121-battle-roar/10" class="sk">Battle Roar</a> / <a href="https://guide.lu4lab.com/classes/skill/181-revival/3" class="sk">Revival</a> / <a href="https://guide.lu4lab.com/classes/skill/211-boost-hp/10" class="sk">Boost HP</a> current; Assist Manager on the SE; personal HP pots.</td></tr>
+<tr><td class="k">Before 40</td><td data-l="Fix">No <a href="https://guide.lu4lab.com/classes/skill/36-whirlwind/37" class="sk">Whirlwind</a>/Thunder Storm yet, but Mastery Lv.1 already hits 4 targets and <a href="https://guide.lu4lab.com/classes/skill/245-wild-sweep/15" class="sk">Wild Sweep</a> exists; BH has <a href="https://guide.lu4lab.com/classes/skill/254-spoil/7" class="sk">Spoil</a>/Sweeper Festival at 28. Farm D quests and spoil in the SG zones of §4.</td></tr>
+<tr><td class="k">60+ G zones are clan land</td><td data-l="Fix">Recruit supports per session — SE/Bishop/PP players complain they can't find parties. Target 9: + Bishop/EE, Prophet, Warcryer/Overlord, flex (SWS, tank, or Glad/Tyrant for sieges) = 270% XP.</td></tr>
+<tr><td class="k">Fatigue is per character</td><td data-l="Fix">Five bars, 10M each; follow the daily loop (§4).</td></tr>
+</tbody></table></div>
+<div class="callout good"><span class="t">Verdict</span> Fix the buffer gap, pick Black/White or Carmine by time zone, farm the Coins of Magic zones at 40–47 and Kail's at 48+, and let the spoil pay for the Lance.</div>
+</div>
+</details>
+</section>
+<!-- ===================== 10. GLOSSARY ===================== -->
+<section class="block" id="glossary">
+<details>
+<summary><span class="num">8</span><h2>Glossary (RU slang)</h2></summary>
+<div class="body">
+<dl class="gloss">
+<dt>Профа / профессия</dt><dd>Class profession. «1-я профа» = 1st class change at 20, «2-я» at 40. «3-й профы нет» = no 3rd professions.</dd>
+<dt>КП / кп</dt><dd>Constant party (константа) — a fixed group that plays together. «КПшный класс» = a class only good inside such a group (Overlord, Sorcerer).</dd>
+<dt>Конст</dt><dd>Same as КП: constant party.</dd>
+<dt>Рандомка</dt><dd>Random / pick-up party.</dd>
+<dt>Вар</dt><dd>Clan war (война). «Автовар» = the automatic war declaration after 100 kills.</dd>
+<dt>ВЛ / варлорд / копейщик</dt><dd>Warlord.</dd>
+<dt>ВК / варк</dt><dd><b>Warcryer</b> (not Warlord!).</dd>
+<dt>Дестр</dt><dd>Destroyer. «Слитый дестр» = a fully invested (whaled/geared) Destroyer.</dd>
+<dt>Глад / тиран / кинжал / дагер</dt><dd>Gladiator / Tyrant / dagger classes.</dd>
+<dt>ШЕ, СХ / ЕЕ / ПП / ОЛ / БД / СВС</dt><dd>Shillien Elder / Elven Elder / Prophet / Overlord / Bladedancer / Swordsinger.</dd>
+<dt>Пал / ШК / ТК / ДА</dt><dd>Paladin / Shillien Knight / Temple Knight / Dark Avenger.</dd>
+<dt>Сумм / саммонер / некр</dt><dd>Summoner / Necromancer.</dd>
+<dt>Гном / спойлер / крафтер</dt><dd>Dwarf / Bounty Hunter / Warsmith. «Гном-маг» = Terramancer.</dd>
+<dt>ПА</dt><dd>Premium Account.</dd>
+<dt>Соски</dt><dd>Soulshots (соулшоты). «Бсс» = blessed spiritshots.</dd>
+<dt>Шмот</dt><dd>Gear/equipment. «Шмотки», «сет» = armor set.</dd>
+<dt>Пушка</dt><dd>Weapon ("cannon"). «Топ-пушка» = best weapon.</dd>
+<dt>РБ / эпик</dt><dd>Raid boss / epic boss (QA, Core, Orfen…).</dd>
+<dt>Заточка / точить</dt><dd>Enchanting. «+6 сет» etc.</dd>
+<dt>Спот</dt><dd>Farming spot / leveling location.</dd>
+<dt>Бомж-фарм</dt><dd>"Hobo farm" — cheap, low-investment farming (no shots, cheap gear).</dd>
+<dt>Кач / качаться / прокачка</dt><dd>Leveling.</dd>
+<dt>Фарм / масс-фарм / АоЕ</dt><dd>Farming / mass (AoE) farming.</dd>
+<dt>Усталость</dt><dd>Fatigue — the daily XP budget (green/yellow/red).</dd>
+<dt>Пика / копьё / полеарм / полярма</dt><dd>Spear / polearm.</dd>
+<dt>Тату / краски</dt><dd>Dyes (tattoos).</dd>
+<dt>СА / рарка</dt><dd>Special Ability (soul-crystal) / rare ("masterwork") item effect.</dd>
+<dt>Окно / бокс / башня</dt><dd>A second client ("window"/"box"); «башня» = buff-box ("tower").</dd>
+<dt>Имба / нерф / ап</dt><dd>Overpowered / nerf / buff.</dd>
+<dt>Задрот / шейх</dt><dd>No-lifer / whale (big spender).</dd>
+<dt>Зеркало</dt><dd>Mirror domain.</dd>
+<dt>ПоЛ / Proof of Loyalty</dt><dd>Clan-level currency from quests and RBs.</dd>
+</dl>
+</div>
+</details>
+</section>
+
+
+
+
+<!-- ===================== 12. CHANGELOG ===================== -->
+<section class="block" id="changelog">
+<details>
+<summary><span class="num">9</span><h2>Changelog</h2></summary>
+<div class="body">
+<ul>
+<li><b>2026-09-10 v9</b> — Published on GitHub Pages from the <a href="https://github.com/G3N7/lu4-polearm-guide">lu4-polearm-guide</a> repo; every version is archived under <a href="v/">/v/</a>; footer links to the repo and its source list.</li>
+<li><b>2026-09-10 v8</b> — Every skill name links to its page on guide.lu4lab.com.</li>
+<li><b>2026-09-10 v7</b> — Removed subclass material; added the SE-vs-Prophet call in the supports table.</li>
+<li><b>2026-09-10 v6</b> — Removed research/process notes; page is gameplay-only (sources and open items live in sources.md).</li>
+<li><b>2026-09-10 v5</b> — Layout rebuilt around data tables: every repeating dataset (route, skills, supports, repeatables, gear, rules) is a table that stacks into label/value rows on phones; two-column grid on desktop; no content changes.</li>
+<li><b>2026-09-09 v4</b> — Accuracy audit against primary sources (~110 pages): <a href="https://guide.lu4lab.com/classes/skill/216-polearm-mastery/45" class="sk">Polearm Mastery</a> target counts, D-grade mob range, PK penalty, Lance price, Halberd stats, Song of the Hunter range, dye prices, buff names, misattributed quotes.</li>
+<li><b>2026-09-09 v3</b> — Condensed; v2 — party section for the real roster + spoil route; v1 — first version (Alpha 1, Global update #13).</li>
+</ul>
+<p class="src">To update: edit <code>src/index.html</code>, bump "Last updated" in the header, add a line here with the next version number, run <code>npm run snapshot</code> and <code>npm test</code>, push. The pipeline publishes the default branch.</p>
+</div>
+</details>
+</section>
+</main>
+
+<a href="#top-of-page" id="top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑</a>
+
+<footer>
+LU4 Polearm Guide · unofficial, fan-made · not affiliated with MasterWork / E-Global · all claims link to their source · summaries are paraphrased, short quotes only.<br>
+Built 9 Sep 2026 · <a href="https://github.com/G3N7/lu4-polearm-guide">source on GitHub</a> · <a href="https://github.com/G3N7/lu4-polearm-guide/blob/HEAD/sources.md">sources.md</a> · <a href="v/">all versions</a>
+</footer>
+
+
+
+<script>
+// LU4 Polearm Guide — vanilla JS: TOC highlighting, expand/collapse all, search, back-to-top.
+(function () {
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.block'));
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var details = sections.map(function (s) { return s.querySelector('details'); });
+
+  // Open the section targeted by the URL hash (and on hash change)
+  function openHash() {
+    var id = location.hash.replace('#', '');
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    var sec = el.closest('section.block');
+    if (sec) { var d = sec.querySelector('details'); if (d) d.open = true; }
+    setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 30);
+  }
+  window.addEventListener('hashchange', openHash);
+  openHash();
+
+  // Highlight active TOC chip while scrolling
+  function setActive(id) {
+    tocLinks.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('active', on);
+      if (on && a.scrollIntoView) a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  // Expand / collapse all
+  var exp = document.getElementById('expandAll');
+  var col = document.getElementById('collapseAll');
+  if (exp) exp.addEventListener('click', function () { details.forEach(function (d) { d.open = true; }); });
+  if (col) col.addEventListener('click', function () { details.forEach(function (d) { d.open = false; }); });
+
+  // Simple in-page search: opens sections containing the term and highlights matches
+  var input = document.getElementById('search');
+  var origHTML = null;
+  function clearMarks() {
+    sections.forEach(function (s, i) {
+      var body = s.querySelector('.body');
+      if (body && origHTML && origHTML[i] != null) body.innerHTML = origHTML[i];
+    });
+  }
+  function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function markText(node, re) {
+    if (node.nodeType === 3) {
+      var txt = node.nodeValue;
+      if (!re.test(txt)) return;
+      re.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0, m;
+      while ((m = re.exec(txt))) {
+        frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+        var mk = document.createElement('mark'); mk.textContent = m[0]; frag.appendChild(mk);
+        last = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    } else if (node.nodeType === 1 && !/^(SCRIPT|STYLE|MARK)$/.test(node.tagName)) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (c) { markText(c, re); });
+    }
+  }
+  if (input) {
+    origHTML = sections.map(function (s) { var b = s.querySelector('.body'); return b ? b.innerHTML : null; });
+    var timer;
+    input.addEventListener('input', function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        var q = input.value.trim();
+        clearMarks();
+        if (q.length < 2) return;
+        var re = new RegExp(escapeRe(q), 'gi');
+        var first = null;
+        sections.forEach(function (s, i) {
+          var body = s.querySelector('.body');
+          if (!body) return;
+          if (re.test(body.textContent)) {
+            details[i].open = true;
+            re.lastIndex = 0;
+            markText(body, re);
+            if (!first) first = body.querySelector('mark');
+          }
+          re.lastIndex = 0;
+        });
+        if (first) first.scrollIntoView({ block: 'center' });
+      }, 200);
+    });
+  }
+
+  // Back to top
+  var top = document.getElementById('top');
+  if (top) {
+    window.addEventListener('scroll', function () { top.classList.toggle('show', window.scrollY > 600); }, { passive: true });
+  }
+})();
+
+</script>
+
+</body>
+</html>

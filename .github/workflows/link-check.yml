@@ -1,0 +1,45 @@
+name: Link check
+
+# The guide links every claim to its source. This weekly job reports links that no longer
+# resolve. It never blocks publishing: read the report in the run summary.
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check external links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --accept 200..=206,300..=399,403,429
+            --timeout 30
+            --max-retries 2
+            --exclude 'discord\.gg'
+            --exclude 'bit\.ly'
+            src/index.html
+          format: markdown
+          output: lychee/out.md
+          fail: false
+      - name: Publish report
+        if: always()
+        run: |
+          echo "## Link check" >> "$GITHUB_STEP_SUMMARY"
+          cat lychee/out.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: lychee/out.md
+          retention-days: 30

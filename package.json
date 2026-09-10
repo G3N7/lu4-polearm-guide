@@ -1,0 +1,31 @@
+{
+  "name": "lu4-polearm-guide",
+  "version": "0.0.0",
+  "private": true,
+  "description": "LU4 Polearm Guide — a static, versioned GitHub Pages site with tests and a publishing pipeline",
+  "type": "module",
+  "homepage": "https://g3n7.github.io/lu4-polearm-guide/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/G3N7/lu4-polearm-guide.git"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "npm run build && node scripts/serve.mjs",
+    "lint": "html-validate \"src/**/*.html\" \"versions/**/*.html\"",
+    "test": "npm run lint && npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test \"tests/**/*.test.mjs\"",
+    "test:e2e": "playwright test",
+    "snapshot": "node scripts/snapshot.mjs",
+    "sources": "node scripts/sources.mjs",
+    "check": "npm run sources -- --check && npm run snapshot -- --check"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "cheerio": "^1.0.0",
+    "html-validate": "^9.0.0"
+  }
+}
