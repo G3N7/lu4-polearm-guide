@@ -1,11 +1,17 @@
 name: Link check
 
-# The guide links every claim to its source. This weekly job reports links that no longer
-# resolve. It never blocks publishing: read the report in the run summary.
+# The guide links every claim to its source. This job reports links that no longer resolve:
+# weekly, on demand, and whenever the guide changes. It never blocks publishing; read the
+# report in the run summary. (GitHub pauses scheduled workflows after 60 days without
+# commits; a manual run or a push to src/index.html revives it.)
 on:
   schedule:
     - cron: '17 6 * * 1'
   workflow_dispatch:
+  push:
+    paths:
+      - src/index.html
+      - .github/workflows/link-check.yml
 
 permissions:
   contents: read
@@ -17,11 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check external links
-        id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          # --base resolves the page's own relative links (v/) against the live site.
           args: >-
             --no-progress
+            --base https://g3n7.github.io/lu4-polearm-guide/
             --accept 200..=206,300..=399,403,429
             --timeout 30
             --max-retries 2
@@ -30,12 +37,8 @@ jobs:
             src/index.html
           format: markdown
           output: lychee/out.md
+          jobSummary: true
           fail: false
-      - name: Publish report
-        if: always()
-        run: |
-          echo "## Link check" >> "$GITHUB_STEP_SUMMARY"
-          cat lychee/out.md >> "$GITHUB_STEP_SUMMARY"
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v4

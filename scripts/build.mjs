@@ -1,5 +1,6 @@
 // Build the GitHub Pages site into dist/:
 //   index.html        the current guide (src/index.html, byte-for-byte)
+//   costs/…, etc.     every other file under src/ copied as-is (extra pages and assets)
 //   v/N/index.html    every archived snapshot from versions/vN.html, with an "archived" banner
 //   v/index.html      list of all versions from the changelog
 //   versions.json     machine-readable version list
@@ -9,7 +10,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {
   ROOT, SRC, VERSIONS_DIR, DEFAULT_SITE_URL,
-  parseChangelog, lastUpdated, listSnapshots, escapeHtml,
+  parseChangelog, lastUpdated, listSnapshots, escapeHtml, extractLinks, isExternal,
 } from './guide.mjs';
 
 const SKIP_PREFIX = /^(?:#|\/|[a-z][a-z0-9+.-]*:)/i;
@@ -28,27 +29,36 @@ export function rebaseRelativeLinks(html, prefix) {
 const BANNER_CSS = `
 .archived-banner { background: #2b2210; color: #f0c96b; border-bottom: 1px solid #c9a961; padding: .55rem .9rem; text-align: center; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 .archived-banner a { color: #fff; text-decoration: underline; }
+nav.toc a.archived-chip { border-color: #c9a961; color: #f0c96b; background: #2b2210; font-weight: 700; }
 `;
 
-/** Turn a snapshot into an archive page: banner, noindex, prefixed title, rebased links. */
+/**
+ * Turn a snapshot into an archive page: banner, a chip in the sticky TOC (so the "archived"
+ * signal survives scrolling), noindex, prefixed title, rebased links.
+ */
 export function archiveCopy(html, { version, date, isCurrent, depth = 2 }) {
   const up = '../'.repeat(depth);
   const note = isCurrent
     ? `Snapshot of the current version, <b>v${version}</b> (${escapeHtml(date)}).`
     : `Archived <b>v${version}</b> (${escapeHtml(date)}) — this copy is frozen and may be out of date.`;
   const banner = `<div class="archived-banner" role="note">${note} <a href="${up}">Read the latest version</a> · <a href="${up}v/">all versions</a></div>\n`;
+  const chip = `<a class="archived-chip" href="${up}">${isCurrent ? 'snapshot' : 'archived'} v${version} → latest</a>\n`;
   let out = rebaseRelativeLinks(html, up);
-  out = replaceOnce(out, '<title>', `<meta name="robots" content="noindex">\n<title>v${version} · `);
-  out = replaceOnce(out, '</head>', `<style>${BANNER_CSS}</style>\n</head>`);
-  out = replaceOnce(out, '<body>\n', `<body>\n${banner}`);
+  out = replaceOnce(out, /<title>/, `<meta name="robots" content="noindex">\n<title>v${version} · `);
+  out = replaceOnce(out, /<\/head>/, `<style>${BANNER_CSS}</style>\n</head>`);
+  out = replaceOnce(out, /<body[^>]*>\s*/, (m) => `${m}${banner}`);
+  out = replaceOnce(out, /(<nav class="toc"[^>]*>\s*<div class="scroller">\s*)/, (m) => `${m}${chip}`);
   return out;
 }
 
-function replaceOnce(str, from, to) {
-  const i = str.indexOf(from);
-  if (i < 0) throw new Error(`expected to find "${from}" in the page`);
-  if (str.indexOf(from, i + from.length) >= 0) throw new Error(`expected exactly one "${from}" in the page`);
-  return str.slice(0, i) + to + str.slice(i + from.length);
+/** Replace exactly one match of `re` (a non-global RegExp) in `str`; throw if there are 0 or 2+. */
+function replaceOnce(str, re, to) {
+  const g = new RegExp(re.source, re.flags.replace('g', '') + 'g');
+  const matches = [...str.matchAll(g)];
+  if (matches.length !== 1) throw new Error(`expected exactly one match of ${re} in the page, found ${matches.length}`);
+  const m = matches[0];
+  const repl = typeof to === 'function' ? to(m[0]) : to;
+  return str.slice(0, m.index) + repl + str.slice(m.index + m[0].length);
 }
 
 const PAGE_CSS = `
@@ -92,15 +102,19 @@ export function archiveIndex(versions) {
       const head = v.archived
         ? `<a class="v" href="${v.version}/">v${v.version}</a>`
         : `<span class="v">v${v.version}</span>`;
-      const tail = v.archived ? '' : ' <span class="na">(not archived — predates the repository)</span>';
+      const tail = v.archived ? '' : ' <span class="na">(no archived copy)</span>';
       const cur = v.current ? ' <span class="na">— current</span>' : '';
       return `<li${v.current ? ' class="current"' : ''}>${head}<span class="d">${escapeHtml(v.date)}</span>${cur}${tail}<p class="s">${escapeHtml(v.summary)}</p></li>`;
     })
     .join('\n');
+  const missing = versions.filter((v) => !v.archived).map((v) => v.version);
+  const note = missing.length
+    ? ` ${missing.length === 1 ? `Version v${missing[0]} has` : `Versions v${Math.min(...missing)}–v${Math.max(...missing)} have`} no archived copy: only the changelog summary survives.`
+    : '';
   return htmlPage({
     title: 'LU4 Polearm Guide · versions',
     body: `<h1>LU4 Polearm Guide · versions</h1>
-<p><a href="../">Read the latest version</a>. Archived copies are frozen as published; the changelog on the current page has the full history.</p>
+<p><a href="../">Read the latest version</a>. Archived copies are frozen as published; the changelog on the current page has the full history.${note}</p>
 <ul>
 ${items}
 </ul>`,
@@ -117,12 +131,65 @@ export function notFoundPage(siteUrl) {
   });
 }
 
+/** Refuse output directories that would wipe the repository or another project. */
+export function assertSafeOutDir(out) {
+  const abs = path.resolve(out);
+  const inside = (parent, child) => {
+    const rel = path.relative(parent, child);
+    return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+  };
+  if (inside(abs, ROOT)) throw new Error(`refusing to build into ${abs}: it contains the repository`);
+  for (const marker of ['.git', 'package.json']) {
+    if (fs.existsSync(path.join(abs, marker))) throw new Error(`refusing to build into ${abs}: it contains ${marker}`);
+  }
+  return abs;
+}
+
+/** Copy every file under srcDir except the root index.html (which is written separately). */
+function copyExtras(srcDir, out) {
+  const copied = [];
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const abs = path.join(dir, entry.name);
+      const rel = path.relative(srcDir, abs);
+      if (entry.isDirectory()) walk(abs);
+      else if (rel !== 'index.html') {
+        fs.mkdirSync(path.dirname(path.join(out, rel)), { recursive: true });
+        fs.copyFileSync(abs, path.join(out, rel));
+        copied.push(rel.split(path.sep).join('/'));
+      }
+    }
+  };
+  walk(srcDir);
+  return copied.sort();
+}
+
+/** Every site-relative link in the guide must resolve to something in the build. */
+function assertSiteLinksResolve(html, out) {
+  const rels = [...new Set(extractLinks(html).map((l) => l.href).filter((h) => h && !h.startsWith('#') && !isExternal(h)))];
+  for (const href of rels) {
+    const clean = href.split('#')[0].split('?')[0];
+    const target = path.join(out, clean);
+    const ok = fs.existsSync(target) && (fs.statSync(target).isFile() || fs.existsSync(path.join(target, 'index.html')));
+    if (!ok) throw new Error(`src/index.html links to "${href}" but the build has no ${clean}${clean.endsWith('/') ? 'index.html' : ''}`);
+  }
+  return rels;
+}
+
+export function normaliseSiteUrl(siteUrl) {
+  const u = new URL(siteUrl);
+  if (!u.pathname.endsWith('/')) u.pathname += '/';
+  return u.href;
+}
+
 export function build({
   src = SRC,
   versionsDir = VERSIONS_DIR,
   out = path.join(ROOT, 'dist'),
   siteUrl = process.env.SITE_URL || DEFAULT_SITE_URL,
 } = {}) {
+  out = assertSafeOutDir(out);
+  siteUrl = normaliseSiteUrl(siteUrl);
   const html = fs.readFileSync(src, 'utf8');
   const changelog = parseChangelog(html);
   const current = changelog[0];
@@ -143,6 +210,7 @@ export function build({
   fs.mkdirSync(path.join(out, 'v'), { recursive: true });
   fs.writeFileSync(path.join(out, 'index.html'), html);
   fs.writeFileSync(path.join(out, '.nojekyll'), '');
+  const extras = copyExtras(path.dirname(src), out);
 
   for (const s of snapshots) {
     const snapHtml = fs.readFileSync(s.file, 'utf8');
@@ -173,8 +241,9 @@ export function build({
   );
   fs.writeFileSync(path.join(out, 'v', 'index.html'), archiveIndex(versions));
   fs.writeFileSync(path.join(out, '404.html'), notFoundPage(siteUrl));
+  const siteLinks = assertSiteLinksResolve(html, out);
 
-  return { out, current, versions, snapshots: snapshots.map((s) => s.version) };
+  return { out, current, versions, snapshots: snapshots.map((s) => s.version), extras, siteLinks };
 }
 
 function cli(argv) {
@@ -186,7 +255,7 @@ function cli(argv) {
   }
   const r = build(opts);
   const arch = r.snapshots.length ? r.snapshots.map((v) => `v${v}`).join(', ') : 'none';
-  console.log(`built v${r.current.version} (${r.current.date}) → ${path.relative(process.cwd(), r.out) || '.'}; archived: ${arch}`);
+  console.log(`built v${r.current.version} (${r.current.date}) → ${path.relative(process.cwd(), r.out) || '.'}; archived: ${arch}; extra files: ${r.extras.length}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) cli(process.argv.slice(2));

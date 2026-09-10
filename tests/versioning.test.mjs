@@ -1,10 +1,20 @@
-// Version bookkeeping: changelog format, header date, and archived snapshots.
+// Version bookkeeping: changelog format, header/footer stamps, and archived snapshots.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { html } from './helpers.mjs';
-import { parseChangelog, currentVersion, lastUpdated, listSnapshots, snapshotPath, VERSIONS_DIR, ROOT } from '../scripts/guide.mjs';
+import {
+  parseChangelog, currentVersion, lastUpdated, headerVersion, footerStamp, parseLongDate,
+  listSnapshots, snapshotPath, VERSIONS_DIR, ROOT,
+} from '../scripts/guide.mjs';
+
+test('parseLongDate reads "D Mon YYYY" and rejects anything else', () => {
+  assert.equal(parseLongDate('10 Sep 2026'), '2026-09-10');
+  assert.equal(parseLongDate('1 Jan 2027'), '2027-01-01');
+  assert.throws(() => parseLongDate('2026-09-10'), /expected e\.g\./);
+  assert.throws(() => parseLongDate('10 Sept 2026'), /unexpected/);
+});
 
 test('changelog entries are "<b>YYYY-MM-DD vN</b> — summary", newest first, strictly descending', () => {
   const entries = parseChangelog(html);
@@ -22,8 +32,11 @@ test('changelog entries are "<b>YYYY-MM-DD vN</b> — summary", newest first, st
   }
 });
 
-test('the header "Last updated" chip matches the newest changelog entry', () => {
-  assert.equal(lastUpdated(html), currentVersion(html).date);
+test('header chips and footer stamp agree with the newest changelog entry', () => {
+  const cur = currentVersion(html);
+  assert.equal(lastUpdated(html), cur.date, '"Last updated" chip');
+  assert.equal(headerVersion(html), cur.version, 'version chip');
+  assert.deepEqual(footerStamp(html), { version: cur.version, date: cur.date }, 'footer "vN · date"');
 });
 
 test('the current version is archived under versions/ and matches src/index.html byte for byte', () => {
@@ -51,12 +64,15 @@ test('every snapshot declares the version in its filename, has a changelog entry
     assert.ok(entry, `${path.basename(s.file)} has no changelog entry in src/index.html`);
     assert.equal(entry.date, declared.date, `changelog date for v${s.version} drifted from the snapshot`);
     assert.equal(lastUpdated(snapHtml), declared.date, `${path.basename(s.file)} header date`);
+    assert.equal(headerVersion(snapHtml), s.version, `${path.basename(s.file)} version chip`);
   }
 });
 
-test('versions/ contains only vN.html snapshots', () => {
+test('versions/ contains only vN.html snapshots, and none use CRLF line endings', () => {
   const stray = fs.readdirSync(VERSIONS_DIR).filter((f) => !/^v\d+\.html$/.test(f));
   assert.deepEqual(stray, []);
+  for (const s of listSnapshots()) assert.ok(!fs.readFileSync(s.file, 'utf8').includes('\r'), `${path.basename(s.file)} has CR characters`);
+  assert.ok(!html.includes('\r'), 'src/index.html has CR characters');
 });
 
 test('the changelog tells editors how to update the page in this repo', () => {

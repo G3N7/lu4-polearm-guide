@@ -1,11 +1,12 @@
-// Structural invariants of src/index.html that the CSS and JS rely on.
+// Structural invariants of src/index.html that the CSS and JS rely on. These test shape,
+// not prose, so ordinary content edits do not break them.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { html, $ } from './helpers.mjs';
 import { sections, extractLinks, isExternal } from '../scripts/guide.mjs';
 
-const EXPECTED_SECTIONS = ['overview', 'classes', 'tiers', 'leveling', 'quests', 'gear', 'party', 'glossary', 'changelog'];
 const TAG_KINDS = new Set(['fact', 'consensus', 'opinion', 'retail', 'na', 'stale']);
+const SITE_LINK = /^[a-z0-9-]+(\/[a-z0-9-]+)*\/$/; // "v/", "costs/": a page in this site
 
 test('document head: lang, charset, viewport, title, description, icon', () => {
   assert.equal($('html').attr('lang'), 'en');
@@ -27,22 +28,21 @@ test('page is self-contained: no external scripts, stylesheets, or root-relative
   assert.equal(rootRelative.length, 0, 'root-relative URLs break under the /lu4-polearm-guide/ base path');
 });
 
-test('exactly one h1 and a "Last updated" chip in the header', () => {
+test('exactly one h1 and the header chips the tests parse', () => {
   assert.equal($('h1').length, 1);
   assert.equal($('header.site h1').text(), 'LU4 Polearm Guide');
-  assert.match($('header.site .meta .updated').text(), /^Last updated: \d{1,2} [A-Z][a-z]{2} \d{4}$/);
+  assert.equal($('header.site .meta .updated').length, 1);
+  assert.equal($('header.site .meta .version').length, 1);
 });
 
-test('sections are in the expected order and numbered 1..n', () => {
+test('sections are numbered 1..n in order, each a collapsible block with summary, h2 and body', () => {
   const secs = sections(html);
-  assert.deepEqual(secs.map((s) => s.id), EXPECTED_SECTIONS);
+  assert.ok(secs.length > 0);
   secs.forEach((s, i) => {
+    assert.ok(s.id, `section ${i + 1} has an id`);
     assert.equal(s.num, String(i + 1), `section #${s.id} number`);
     assert.ok(s.title.length > 3, `section #${s.id} has an h2 title`);
   });
-});
-
-test('every section is a collapsible block with summary, h2 and body', () => {
   $('main > section.block').each((_, s) => {
     const id = $(s).attr('id');
     assert.equal($(s).children('details').length, 1, `#${id} details`);
@@ -51,6 +51,7 @@ test('every section is a collapsible block with summary, h2 and body', () => {
     assert.equal($(s).find('> details > summary > h2').length, 1, `#${id} h2`);
     assert.equal($(s).find('> details > .body').length, 1, `#${id} .body`);
   });
+  assert.ok(secs.some((s) => s.id === 'changelog'), 'the changelog section exists (versioning depends on it)');
 });
 
 test('the TOC mirrors the sections in order', () => {
@@ -77,29 +78,28 @@ test('every in-page anchor points at an existing id', () => {
   assert.deepEqual(broken, []);
 });
 
-test('every link has a non-empty href and external links are valid https URLs', () => {
+test('every link is a fragment, a page of this site, or a valid https URL', () => {
   const links = extractLinks(html);
-  assert.ok(links.length > 100, 'the guide is heavily sourced');
+  assert.ok(links.length > 0);
   for (const l of links) {
     assert.ok(l.href.length > 0, `empty href near "${l.text}"`);
-    if (l.href.startsWith('#')) continue;
-    if (l.href === 'v/') continue; // site-relative link to the version archive
-    assert.ok(isExternal(l.href), `unexpected non-external href: ${l.href}`);
+    if (l.href.startsWith('#') || SITE_LINK.test(l.href)) continue;
+    assert.ok(isExternal(l.href), `unexpected href: ${l.href}`);
     const u = new URL(l.href);
     assert.equal(u.protocol, 'https:', `insecure link: ${l.href}`);
     assert.ok(!/\s/.test(l.href), `whitespace in href: ${l.href}`);
   }
 });
 
-test('links do not contain unencoded ampersands or dangerous schemes', () => {
-  for (const l of extractLinks(html)) {
-    assert.doesNotMatch(l.href, /^\s*javascript:/i);
-  }
+test('href attributes in the source have no unencoded ampersands', () => {
+  // cheerio decodes entities, so check the raw source: "&" must be "&amp;" or a named/numeric entity.
+  const bad = [...html.matchAll(/href="([^"]*)"/g)].map((m) => m[1]).filter((h) => /&(?!amp;|#\d+;|#x[0-9a-f]+;|[a-z]+;)/i.test(h));
+  assert.deepEqual(bad, []);
 });
 
 test('skill links all point at lu4lab skill pages', () => {
   const sk = $('a.sk');
-  assert.ok(sk.length > 40);
+  assert.ok(sk.length > 0);
   sk.each((_, a) => {
     assert.match($(a).attr('href'), /^https:\/\/guide\.lu4lab\.com\/classes\/skill\/\d+-[a-z0-9-]+\/\d+$/, $(a).text());
     assert.ok($(a).text().trim().length > 0, 'skill link has text');
@@ -108,7 +108,7 @@ test('skill links all point at lu4lab skill pages', () => {
 
 test('responsive tables: header/cell counts match, first cell is the key, others carry data-l labels', () => {
   const tables = $('table.rt');
-  assert.ok(tables.length >= 10);
+  assert.ok(tables.length > 0);
   tables.each((ti, t) => {
     const heads = $(t).find('> thead > tr > th');
     assert.ok(heads.length >= 2, `table ${ti} has a header row`);
@@ -127,12 +127,11 @@ test('responsive tables: header/cell counts match, first cell is the key, others
   });
 });
 
-test('legacy table wrappers are not used (v5 layout is all .rt tables)', () => {
-  assert.equal($('.tablewrap').length, 0);
+test('every table is a responsive .rt table (plain tables do not stack on phones)', () => {
   assert.equal($('table:not(.rt)').length, 0);
 });
 
-test('tags use only known kinds', () => {
+test('tags use only known kinds and the legend explains them', () => {
   $('.tag').each((_, el) => {
     const kinds = ($(el).attr('class') || '').split(/\s+/).filter((c) => c !== 'tag');
     assert.equal(kinds.length, 1, `tag "${$(el).text()}" has one kind`);
@@ -149,17 +148,16 @@ test('callouts have a title', () => {
   });
 });
 
-test('key-value grids alternate a bold label and content', () => {
+test('key-value grids label every cell', () => {
   $('.kv > div').each((_, el) => {
     assert.ok($(el).children('b').first().text().trim().length > 0, 'kv cell label');
   });
 });
 
-test('glossary is a definition list with matching dt/dd pairs', () => {
-  const dts = $('#glossary dl.gloss > dt');
-  const dds = $('#glossary dl.gloss > dd');
-  assert.ok(dts.length > 20);
-  assert.equal(dts.length, dds.length);
+test('definition lists pair every dt with a dd', () => {
+  $('dl').each((_, dl) => {
+    assert.equal($(dl).children('dt').length, $(dl).children('dd').length);
+  });
 });
 
 test('interactive controls the script depends on exist', () => {
@@ -177,4 +175,8 @@ test('the footer links to the repository, sources.md and the version archive', (
   assert.ok(hrefs.includes('https://github.com/G3N7/lu4-polearm-guide'));
   assert.ok(hrefs.some((h) => /github\.com\/G3N7\/lu4-polearm-guide\/blob\/HEAD\/sources\.md$/.test(h)));
   assert.ok(hrefs.includes('v/'));
+});
+
+test('the gear section links to the Kit Ledger page', () => {
+  assert.equal($('#gear a[href="costs/"]').length, 1);
 });

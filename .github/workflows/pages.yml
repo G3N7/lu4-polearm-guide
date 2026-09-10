@@ -8,13 +8,18 @@ on:
 permissions:
   contents: read
 
+# Superseded runs are cancelled for branches and pull requests, never for the default branch,
+# so an in-flight production deploy is always allowed to finish.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
 
 jobs:
   test:
     name: Lint, unit and browser tests
+    # A pull request from a branch in this repository is already tested by its push; only
+    # pull requests from forks need the pull_request run.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -58,8 +63,9 @@ jobs:
 
   deploy:
     name: Publish to GitHub Pages
-    # Only the repository's default branch is published; PRs and other branches stop after build.
-    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    # Pushes to the repository's default branch publish. A manual "Run workflow" publishes the
+    # branch it was started from (useful for the very first deploy and for previews).
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch))
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -74,10 +80,9 @@ jobs:
       group: github-pages
       cancel-in-progress: false
     steps:
-      - name: Configure Pages (enables it on first run)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      # GitHub Pages must be enabled once by hand (Settings → Pages → Source: GitHub Actions);
+      # the workflow token is not allowed to enable it.
+      - uses: actions/configure-pages@v5
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

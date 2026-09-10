@@ -63,6 +63,7 @@ header.site .sub { color: var(--muted); font-size: .9rem; margin: .2rem 0 .6rem;
 .meta { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .78rem; color: var(--muted); }
 .meta span { border: 1px solid var(--line); border-radius: 999px; padding: .15rem .6rem; }
 .meta .updated { color: var(--gold2); border-color: var(--gold); }
+.meta .version { color: var(--gold2); border-color: var(--gold); font-family: var(--serif); font-weight: 700; }
 
 /* Sticky TOC */
 nav.toc {
@@ -221,6 +222,7 @@ a.sk:hover { color: var(--gold2); }
   <div class="sub">Warlord &amp; AoE-group handbook, built from the official forum, patch notes, Telegram and fan databases. Written for a group of friends who want to play spears together.</div>
   <div class="meta">
     <span class="updated">Last updated: 10 Sep 2026</span>
+    <span class="version">v9</span>
     <span>Game state: Alpha 1 · patch #13 (7 Sep 2026)</span>
     <span>Servers: Gamma · Black · White · Carmine</span>
     <span>Level cap 75 · A-grade</span>
@@ -570,7 +572,7 @@ a.sk:hover { color: var(--gold2); }
 <summary><span class="num">9</span><h2>Changelog</h2></summary>
 <div class="body">
 <ul>
-<li><b>2026-09-10 v9</b> — Published on GitHub Pages from the <a href="https://github.com/G3N7/lu4-polearm-guide">lu4-polearm-guide</a> repo; every version is archived under <a href="v/">/v/</a>; footer links to the repo and its source list.</li>
+<li><b>2026-09-10 v9</b> — Published on GitHub Pages from the <a href="https://github.com/G3N7/lu4-polearm-guide">lu4-polearm-guide</a> repo. Version chip in the header; from v9 on every version is archived under <a href="v/">/v/</a> (earlier ones are listed there without a copy); footer links to the repo and its source list.</li>
 <li><b>2026-09-10 v8</b> — Every skill name links to its page on guide.lu4lab.com.</li>
 <li><b>2026-09-10 v7</b> — Removed subclass material; added the SE-vs-Prophet call in the supports table.</li>
 <li><b>2026-09-10 v6</b> — Removed research/process notes; page is gameplay-only (sources and open items live in sources.md).</li>
@@ -578,7 +580,7 @@ a.sk:hover { color: var(--gold2); }
 <li><b>2026-09-09 v4</b> — Accuracy audit against primary sources (~110 pages): <a href="https://guide.lu4lab.com/classes/skill/216-polearm-mastery/45" class="sk">Polearm Mastery</a> target counts, D-grade mob range, PK penalty, Lance price, Halberd stats, Song of the Hunter range, dye prices, buff names, misattributed quotes.</li>
 <li><b>2026-09-09 v3</b> — Condensed; v2 — party section for the real roster + spoil route; v1 — first version (Alpha 1, Global update #13).</li>
 </ul>
-<p class="src">To update: edit <code>src/index.html</code>, bump "Last updated" in the header, add a line here with the next version number, run <code>npm run snapshot</code> and <code>npm test</code>, push. The pipeline publishes the default branch.</p>
+<p class="src">To update: edit <code>src/index.html</code>; set the next version number and date in the header chips, in the footer and in a new line here; run <code>npm run snapshot</code> (and <code>npm run sources</code> if links changed), then <code>npm test</code>; push. The pipeline publishes the default branch. Details in the README.</p>
 </div>
 </details>
 </section>
@@ -588,7 +590,7 @@ a.sk:hover { color: var(--gold2); }
 
 <footer>
 LU4 Polearm Guide · unofficial, fan-made · not affiliated with MasterWork / E-Global · all claims link to their source · summaries are paraphrased, short quotes only.<br>
-Built 9 Sep 2026 · <a href="https://github.com/G3N7/lu4-polearm-guide">source on GitHub</a> · <a href="https://github.com/G3N7/lu4-polearm-guide/blob/HEAD/sources.md">sources.md</a> · <a href="v/">all versions</a>
+v9 · 10 Sep 2026 · <a href="https://github.com/G3N7/lu4-polearm-guide">source on GitHub</a> · <a href="https://github.com/G3N7/lu4-polearm-guide/blob/HEAD/sources.md">sources.md</a> · <a href="v/">all versions</a>
 </footer>
 
 

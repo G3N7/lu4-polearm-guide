@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lu4 Polearm Kit Ledger</title>
+<meta name="description" content="What a fully kitted polearm setup costs at each grade on Lu4 (Liberta Ultimata 4), in adena, Master Coins and store dollars, with where every piece comes from.">
+<link rel="icon" href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🔱%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700&amp;family=Source+Sans+3:ital,wght@0,400;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+  :root {
+    --ground: #F3F4F7;
+    --surface: #FFFFFF;
+    --surface-2: #E9ECF1;
+    --ink: #1C2130;
+    --ink-2: #414A5C;
+    --muted: #6B7383;
+    --rule: #D6DAE2;
+    --rule-strong: #B9C0CC;
+    --brass: #A0741E;
+    --brass-ink: #6E4F10;
+    --brass-soft: #F6ECD6;
+    --g-d: #3A6BB0;
+    --g-c: #2C8466;
+    --g-b: #7659A6;
+    --g-a: #BF6E1B;
+    --g-s: #B0443A;
+    --warn-soft: #FBF1DC;
+    --warn-ink: #7A5410;
+    --chip-ink: #FFFFFF;
+    --shadow: 0 1px 2px rgba(20,25,40,.06), 0 6px 18px rgba(20,25,40,.06);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #12151C;
+      --surface: #1A1E28;
+      --surface-2: #232937;
+      --ink: #E7EAF0;
+      --ink-2: #C3C9D4;
+      --muted: #8F98A8;
+      --rule: #2C3342;
+      --rule-strong: #3C4557;
+      --brass: #D8A93F;
+      --brass-ink: #F0CD7A;
+      --brass-soft: #2B2617;
+      --g-d: #7FA6E0;
+      --g-c: #6DBF9F;
+      --g-b: #B09AD8;
+      --g-a: #E2A05A;
+      --g-s: #E07A70;
+      --warn-soft: #2B2417;
+      --warn-ink: #E6C77A;
+      --chip-ink: #12151C;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #12151C;
+    --surface: #1A1E28;
+    --surface-2: #232937;
+    --ink: #E7EAF0;
+    --ink-2: #C3C9D4;
+    --muted: #8F98A8;
+    --rule: #2C3342;
+    --rule-strong: #3C4557;
+    --brass: #D8A93F;
+    --brass-ink: #F0CD7A;
+    --brass-soft: #2B2617;
+    --g-d: #7FA6E0;
+    --g-c: #6DBF9F;
+    --g-b: #B09AD8;
+    --g-a: #E2A05A;
+    --g-s: #E07A70;
+    --warn-soft: #2B2417;
+    --warn-ink: #E6C77A;
+    --chip-ink: #12151C;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  a { color: var(--brass-ink); text-decoration-color: var(--rule-strong); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: var(--brass); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  .page { max-width: 1120px; margin: 0 auto; padding: 40px 24px 80px; }
+  .prose { max-width: 68ch; }
+
+  h1, h2, h3 { font-family: "Bitter", Georgia, "Times New Roman", serif; text-wrap: balance; margin: 0; color: var(--ink); }
+  h1 { font-size: clamp(30px, 4.2vw, 42px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
+  h2 { font-size: 24px; font-weight: 600; line-height: 1.2; }
+  h3 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+  p { margin: 0; }
+  .prose p + p { margin-top: 12px; }
+
+  .eyebrow { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  header.masthead { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .masthead .sub { font-size: 18px; color: var(--ink-2); max-width: 70ch; }
+  .masthead .meta { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); font-size: 14px; }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 16px 0; border-bottom: 1px solid var(--rule); font-size: 14px; }
+  nav.toc a { color: var(--ink-2); text-decoration: none; }
+  nav.toc a:hover { color: var(--brass-ink); }
+  nav.toc a.back { color: var(--brass-ink); font-weight: 600; }
+
+  section { padding-top: 40px; display: grid; gap: 18px; }
+  .section-head { display: grid; gap: 6px; }
+  .section-head .kicker { display: flex; align-items: center; gap: 12px; }
+
+  .grade { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 8px; border-radius: 4px; font-family: "Bitter", Georgia, serif; font-weight: 700; font-size: 14px; color: var(--chip-ink); letter-spacing: .04em; }
+  .grade.d { background: var(--g-d); }
+  .grade.c { background: var(--g-c); }
+  .grade.b { background: var(--g-b); }
+  .grade.a { background: var(--g-a); }
+  .grade.s { background: var(--g-s); }
+  .grade.n { background: var(--muted); }
+
+  .totals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .totals > div { background: var(--surface); padding: 12px 16px; display: grid; gap: 2px; }
+  .totals .label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .totals .value { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .totals .note { font-size: 13px; color: var(--muted); }
+  .totals .mc .value { color: var(--brass-ink); }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); box-shadow: var(--shadow); }
+  .tablewrap.flat { box-shadow: none; }
+  table { border-collapse: collapse; width: 100%; min-width: 960px; font-size: 14.5px; }
+  table.compact { min-width: 0; }
+  thead th { text-align: left; font-family: "IBM Plex Mono", ui-monospace, monospace; font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--rule-strong); background: var(--surface-2); white-space: nowrap; }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr.total td { background: var(--brass-soft); font-weight: 600; border-top: 1px solid var(--rule-strong); }
+  td.num, th.num { text-align: right; font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.slot { font-weight: 600; white-space: nowrap; }
+  td.item { min-width: 260px; }
+  td.how { min-width: 300px; color: var(--ink-2); }
+  td .stat { display: block; color: var(--muted); font-size: 13.5px; margin-top: 2px; }
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; font-size: 15px; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; }
+
+  .callout { background: var(--warn-soft); color: var(--warn-ink); border-left: 3px solid var(--brass); padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 15px; max-width: 78ch; }
+  .callout strong { color: inherit; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 18px; display: grid; gap: 10px; align-content: start; }
+  .panel h3 { font-size: 16px; }
+  ul.tight { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+  ul.tight li { color: var(--ink-2); }
+  .small { font-size: 13.5px; color: var(--muted); }
+
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13.5px; }
+  footer ul { margin: 8px 0 0; padding-left: 18px; columns: 2; column-gap: 32px; }
+  footer li { break-inside: avoid; margin-bottom: 4px; }
+  footer p.sources-head { margin-top: 12px; }
+  @media (max-width: 720px) { footer ul { columns: 1; } .totals { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="masthead">
+    <div class="eyebrow">Lineage 2 · Lu4 (Black / White) · Bounty Hunter polearm build</div>
+    <h1>Lu4 Polearm Kit Ledger</h1>
+    <p class="sub">What a fully kitted polearm setup costs at each grade on Lu4, in adena, in Master Coins, and in store dollars, with where every piece comes from.</p>
+    <div class="meta">
+      <span>Prices checked 9 Sep 2026</span>
+      <span>Servers Black &amp; White opened 31 Jul 2026, Alpha 1, level cap 75</span>
+      <span>Conversion: 20,000 adena per MC · 10 MC = $1</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Sections">
+    <a class="back" href="../">← Polearm Guide</a>
+    <a href="#rates">Rates</a>
+    <a href="#ladder">Grade ladder</a>
+    <a href="#d">D‑grade</a>
+    <a href="#c">C‑grade</a>
+    <a href="#b">B‑grade</a>
+    <a href="#a">A‑grade</a>
+    <a href="#s">S‑grade</a>
+    <a href="#se">SE box &amp; Premium</a>
+    <a href="#rules">Enchant, SA, set rules</a>
+    <a href="#sources">Caveats &amp; sources</a>
+  </nav>
+
+  <section id="rates">
+    <div class="section-head">
+      <h2>How Master Coins turn into gear</h2>
+      <p class="prose">The Lu4 store sells no weapons, armor or enchant scrolls. Premium, autoloot, inventory slots, EXP boosts and cosmetic accessories only. Master Coins are a tradeable item, so the route to gear is selling MC to other players for adena, or paying a seller in MC directly. Everything below is therefore priced in adena first and converted.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Exchange rates used</h3>
+        <dl class="kv">
+          <dt>Black</dt><dd><span class="mono">16,000</span> adena per MC (tracker, 31 Aug, unchanged 9 Sep; was 9,000 on 25 Aug)</dd>
+          <dt>White</dt><dd><span class="mono">22,000</span> adena per MC (31 Aug; was 16,000 on 26 Aug)</dd>
+          <dt>Gamma</dt><dd><span class="mono">17,000</span> adena per MC (8 Sep)</dd>
+          <dt>Carmine</dt><dd>no tracker data</dd>
+          <dt>Store</dt><dd><span class="mono">10 MC = $1</span>. FunPay resellers list MC at €0.063–0.10 each, roughly 30% under the store</dd>
+          <dt>Adena, real money</dt><dd>€3.5–11 per million on FunPay for Black / White / Carmine</dd>
+        </dl>
+        <p class="small">Tables use 20,000 adena per MC. On Black the MC figures run ~25% higher, on White ~10% lower.</p>
+      </div>
+      <div class="panel">
+        <h3>Premium Account (the one MC purchase that matters)</h3>
+        <dl class="kv">
+          <dt>1 / 3 / 7 days</dt><dd><span class="mono">20 / 50 / 100</span> MC</dd>
+          <dt>14 / 30 days</dt><dd><span class="mono">150 / 250</span> MC</dd>
+          <dt>100 days</dt><dd><span class="mono">500</span> MC, includes a Shine Pixel Hat</dd>
+          <dt>Gives</dt><dd>+50% EXP, SP, drop and spoil (spoil bonus counts only on the spoiler), +50% weight, +50 inventory and warehouse slots, +5 trade slots, free NPC buffs, free town teleports, global chat</dd>
+          <dt>Windows</dt><dd>Lu4 allows <strong>one game window</strong>. Premium adds one. A dual box needs it.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="ladder">
+    <div class="section-head">
+      <h2>Grade ladder at a glance</h2>
+      <p class="prose">Core kit means the polearm with SA at +3, the heavy set at +3, and jewelry where noted. Magic Coins are the three Coins of Magic farm coins (Gold Wyvern, Silver Unicorn, Blood Medusa); "each" means that many of each type.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Kit</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD (store)</th><th>Magic Coins</th><th>Price basis</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade d">D</span></td><td>Glaive +3 SA, Half Plate +3</td><td class="num">3.3–3.8M</td><td class="num">165–190</td><td class="num">$17–19</td><td>none</td><td>NPC ladder prices, Lu4 wiki</td></tr>
+          <tr><td><span class="grade c">C</span></td><td>Body Slasher +3 SA, Dwarven Chain +3, mid jewelry (budget)</td><td class="num">8.0–8.3M</td><td class="num">400–415</td><td class="num">$40–42</td><td>~4,500 each</td><td>Sorint shop + Gamma market</td></tr>
+          <tr><td><span class="grade c">C</span></td><td>Orcish Poleaxe +3 SA, Full Plate +3, top jewelry</td><td class="num">20.5–30.5M</td><td class="num">1,025–1,525</td><td class="num">$103–153</td><td>~9,600 each</td><td>Sorint shop + Gamma market / Black craft mats</td></tr>
+          <tr><td><span class="grade b">B</span></td><td>Lance +3 SA, Doom Plate +3, Adamantite</td><td class="num">~95–105M</td><td class="num">~4,750–5,250</td><td class="num">$475–525</td><td>Kail coins for recipe</td><td>Gamma market; Lance estimated</td></tr>
+          <tr><td><span class="grade a">A</span></td><td>Halberd +3 SA, Tallum Plate +3, Phoenix</td><td class="num">~290M</td><td class="num">~14,500</td><td class="num">~$1,450</td><td>none</td><td>Gamma market only</td></tr>
+          <tr><td><span class="grade s">S</span></td><td>not in game</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td>–</td><td>Level cap 75; top A not yet released</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="callout"><strong>Where the money goes.</strong> The jump from C to B is almost entirely enchant scrolls (3.15M per B weapon scroll, 1.15M per armor scroll) and sealed armor, not the weapon. A‑grade scrolls are 11M and 4M each.</p>
+  </section>
+
+  <section id="d">
+    <div class="section-head">
+      <div class="kicker"><span class="grade d">D</span><h2>D‑grade kit</h2></div>
+      <p class="prose">Lu4 reshuffled polearm tiers: Glaive is the top D polearm, Winged Spear is high D, and Scythe, Body Slasher and Orcish Glaive were moved to low C. D sets are three pieces (helmet, body, gaiters) plus an optional shield; gauntlets and boots are not set pieces.</p>
+    </div>
+    <div class="totals">
+      <div><span class="label">Adena</span><span class="value">3.3–3.8M</span><span class="note">core kit, no jewelry</span></div>
+      <div class="mc"><span class="label">Master Coins</span><span class="value">165–190</span><span class="note">~210–240 at Black's rate</span></div>
+      <div><span class="label">Store USD</span><span class="value">$17–19</span><span class="note">about one 30‑day Premium</span></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>How to get / notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Weapon</td><td class="item">Glaive<span class="stat">P.Atk 92 / M.Atk 54, +3 → 98</span></td><td class="num">1.48–1.70M</td><td class="num">74–85</td><td class="num">$7–9</td><td class="how">Free Trident via the 1st‑profession coupon (Great Spear + coupon at the Newbie Guide), then four upgrades at any weapon merchant: 249,090 / 342,240 / 456,090 / 431,940. Castle tax up to 15%. Gamma market 1.87M.</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Weapon SA</td><td class="item">Stage‑4 soul crystal + 150 Gemstone D<span class="stat">Wide Blow (+60° swing) / Health (+25% HP) / Guidance (+5 accuracy)</span></td><td class="num">0.20M</td><td class="num">10</td><td class="num">$1</td><td class="how">Stage‑0 crystal from any blacksmith, level it on mobs (chance‑based), blacksmith inserts it. Gemstone D 1,350 at grocers.</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Weapon +3</td><td class="item">3× Scroll: Enchant Weapon (D)<span class="stat">+3 is the safe limit, 100% success</span></td><td class="num">negligible</td><td class="num">~0</td><td class="num">~$0</td><td class="how">Every D raid boss drops a normal or blessed D scroll at 100%. Tracker price for this scroll is unreliable.</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Armor set</td><td class="item">Half Plate Helmet + Armor + Gaiters<span class="stat">Set: Max HP +184, M.Def +5%. Helmet P.Def 44</span></td><td class="num">0.6–0.8M</td><td class="num">30–40</td><td class="num">$3–4</td><td class="how">Body and gaiters via the armor merchant ladder (~0.52M from Scale Mail / Iron Plate Gaiters). Helmets are not sold in shops: Corsair Captain Kylon (33), Gargoyle Lord Sirocco (35), Chertuba of Great Soul (35) at ~7%, or craft, or market (~0.25–0.3M).</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Gloves, boots</td><td class="item">Half Plate Gauntlets + Boots<span class="stat">not set pieces</span></td><td class="num">0.1–0.2M</td><td class="num">5–10</td><td class="num">$1</td><td class="how">Ladder or market (~101k each on Gamma).</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Set +3</td><td class="item">9× Scroll: Enchant Armor (D)<span class="stat">Set enchant bonus at +3: P.Def +5, Accuracy +1</span></td><td class="num">≤0.9M</td><td class="num">≤45</td><td class="num">≤$4.5</td><td class="how">Only the three set pieces need +3. ≤100k per scroll (Gamma). Safe at +3.</td></tr>
+          <tr><td><span class="grade d">D</span></td><td class="slot">Jewelry (optional)</td><td class="item">Elven Necklace, 2× Earring, 2× Ring</td><td class="num">~0.45M</td><td class="num">~23</td><td class="num">$2</td><td class="how">Gamma market. Usually left at +0.</td></tr>
+          <tr class="total"><td><span class="grade d">D</span></td><td class="slot">Core total</td><td class="item">weapon, SA, set, set +3</td><td class="num">3.3–3.8M</td><td class="num">165–190</td><td class="num">$17–19</td><td class="how">Mithril set instead of Half Plate (P.Atk +4%, Poison resist +20%, helmet drops at 45% from Betrayer of Urutu Freki / Anakazel) saves another 30–50 MC. Brigandine sits between (HP +153, P.Def +5%).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="c">
+    <div class="section-head">
+      <div class="kicker"><span class="grade c">C</span><h2>C‑grade kit</h2></div>
+      <p class="prose">C polearms on Lu4, best to cheapest: Orcish Poleaxe 156, Scorpion / Widow Maker 144, Poleaxe 139, Bec de Corbin 122, Body Slasher / Scythe / Orcish Glaive 107. C armor and jewelry come from Sorint (Coins of Magic, Hunter's Village) for adena plus farm coins, gated by Coin Collector rank: III low C, II mid C, I top C.</p>
+    </div>
+    <div class="totals">
+      <div><span class="label">Adena</span><span class="value">20.5–30.5M</span><span class="note">plus ~9,600 of each Magic Coin</span></div>
+      <div class="mc"><span class="label">Master Coins</span><span class="value">1,025–1,525</span><span class="note">low end = buy the weapon at Gamma's price</span></div>
+      <div><span class="label">Store USD</span><span class="value">$103–153</span><span class="note">before the coin grind</span></div>
+    </div>
+    <h3>Target kit</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>How to get / notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Weapon</td><td class="item">Orcish Poleaxe<span class="stat">P.Atk 156 / M.Atk 83, +3 → 165</span></td><td class="num">13.2–23M</td><td class="num">660–1,150</td><td class="num">$66–115</td><td class="how">13.2M finished on Gamma's market. Craft: 11 blades (Sorint, ~10k adena + ~115 coins each, or ~30k on the market) + recipe from Vergara (350k + 350 of each of 6 coin types, needs Royal Membership at 48+) + 104 Mithril Alloy, 130 Metal Hardener, 26 High‑Grade Suede, 420 Crystal C, 248 Gemstone C, crafted by a Warsmith: 20–23M at Black's material prices. Drops: Orfen / Core / Queen Ant 7.7%, Necrosentinel Royal Guard (48) 1.8%. Also in the "1000 Years, the End of Lamentation" reward pool (Gilmore, 48–55). FunPay asks ~€160 (26–45M equivalent) are the ceiling.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Weapon SA</td><td class="item">Stage‑8 crystal + 555 Gemstone C<span class="stat">Critical Stun 29% / Wide Blow / Towering Blow (+20 range on extra targets)</span></td><td class="num">2.0–2.25M</td><td class="num">100–112</td><td class="num">$10–11</td><td class="how">Gemstone C 3,600–4,050. With a healer behind you take Wide Blow or Towering Blow.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Weapon +3</td><td class="item">3× Scroll: Enchant Weapon (C)</td><td class="num">2.76M</td><td class="num">138</td><td class="num">$14</td><td class="how">920k each on Gamma; Black / White unlisted. Blessed C weapon scroll 4.5M.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Armor set</td><td class="item">Full Plate Helmet / Armor / Gauntlets / Boots<span class="stat">Set: STR +1, Max HP +270, Vampiric Rage effect +4%. Body is one‑piece, safe to +4</span></td><td class="num">0.83M + 5,304 coins each</td><td class="num">41 + coins</td><td class="num">$4</td><td class="how">Sorint Rank I: armor 536,400 + 3,334 each; helmet 123,780 + 834; gauntlets and boots 82,530 + 568 each. Market alternative 8.4M (420 MC). Also in the Warehouse Keeper's Pastime quest pool.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Set +3</td><td class="item">12× Scroll: Enchant Armor (C)<span class="stat">Set enchant bonus at +3: P.Def +10, Accuracy +1</span></td><td class="num">1.2M</td><td class="num">60</td><td class="num">$6</td><td class="how">100k each on Gamma.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Jewelry</td><td class="item">Necklace of Seal, 2× Nassen's Earring, 2× Ring of Seal</td><td class="num">0.46M + 2,804 coins each</td><td class="num">23 + coins</td><td class="num">$2</td><td class="how">Sorint Rank I: 130,320 + 868; 97,740 + 668 each; 65,160 + 300 each. Market alternative ~6.4M (320 MC).</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Rank‑ups</td><td class="item">Coin Collector II, then I</td><td class="num">220 coins each + 6 special coins</td><td class="num">–</td><td class="num">–</td><td class="how">20 of each for II, 200 of each for I, exchanged through the rank NPCs. Rank I unlocks top C and the Royal Member quest.</td></tr>
+          <tr class="total"><td><span class="grade c">C</span></td><td class="slot">Core total</td><td class="item">weapon, SA, +3, Full Plate +3, jewelry</td><td class="num">20.5–30.5M + ~9,600 coins each</td><td class="num">1,025–1,525</td><td class="num">$103–153</td><td class="how">Add ~1,000 MC for +6 with blessed scrolls; augment rolls 25–100 MC each (Life Stone 450k / 775k / 2M + Gemstone D).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Budget kit</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>How to get / notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Weapon</td><td class="item">Body Slasher<span class="stat">P.Atk 107 / M.Atk 61, +3 → 116. SA stage 5 + 97 Gemstone C: Critical Stun 34% / Wide Blow / Towering Blow</span></td><td class="num">3.1M + 0.35–0.39M SA</td><td class="num">173–175</td><td class="num">$17</td><td class="how">Gamma market. Raid bosses Rayito the Looter (40), Nellis' Vengeful Spirit (41), Gwindorr (42) at 0.68%. Craft from 8 blades.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Weapon +3</td><td class="item">3× Scroll: Enchant Weapon (C)</td><td class="num">2.76M</td><td class="num">138</td><td class="num">$14</td><td class="how">Same scroll bill as the top weapon.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Armor set</td><td class="item">Dwarven Chain Shirt / Gaiters / Gauntlets / Boots<span class="stat">Set: CON +3 (shield adds reflect 5%)</span></td><td class="num">0.32M + 2,304 coins each</td><td class="num">16</td><td class="num">$2</td><td class="how">Sorint Rank II: 148,650 + 1,000; 92,910 + 668; 37,170 + 318 each.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Set +3</td><td class="item">12× Scroll: Enchant Armor (C)</td><td class="num">1.2M</td><td class="num">60</td><td class="num">$6</td><td class="how"></td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">Jewelry</td><td class="item">Necklace of Mermaid, 2× Earring of Protection, 2× Ring of Protection</td><td class="num">0.24M + 1,954 coins each</td><td class="num">12</td><td class="num">$1</td><td class="how">Sorint Rank II: 90,630 + 668; 45,150 + 384 each; 30,090 + 259 each.</td></tr>
+          <tr class="total"><td><span class="grade c">C</span></td><td class="slot">Budget total</td><td class="item"></td><td class="num">8.0–8.3M + ~4,500 coins each</td><td class="num">400–415</td><td class="num">$40–42</td><td class="how">Other C heavy sets from Sorint: Composite 566k + ~3,900 coins (M.Def +7%, weight +5,795), Chain Mail (DEX +2, P.Def +6%).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="b">
+    <div class="section-head">
+      <div class="kicker"><span class="grade b">B</span><h2>B‑grade kit</h2></div>
+      <p class="prose">Usable from level 52. B gear drops and crafts sealed and is unsealed at the Blacksmith of Mammon. Prices here are Gamma's market; Black and White have no B economy on the tracker yet, and FunPay asks there run ~€315 for a B weapon.</p>
+    </div>
+    <div class="totals">
+      <div><span class="label">Adena</span><span class="value">~95–105M</span><span class="note">plus SA and unsealing</span></div>
+      <div class="mc"><span class="label">Master Coins</span><span class="value">~4,750–5,250</span><span class="note">~3,800–4,200 with Zubei's instead of Doom</span></div>
+      <div><span class="label">Store USD</span><span class="value">$475–525</span><span class="note">Gamma prices</span></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>How to get / notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Weapon (top)</td><td class="item">Lance<span class="stat">P.Atk 194 / M.Atk 99. SA stage 10: Health / Towering Blow / Critical Stun. Rare version: Earth</span></td><td class="num">~30–40M (est.)</td><td class="num">1,500–2,000</td><td class="num">$150–200</td><td class="how">Recipe from Vergara: 60% for 1M adena + 450 farm coins ×3 + 650 Kail coins ×3, or 100% for 1.25M + 600 + 800. Lance Blades ~350k each on Gamma. Also B raid bosses and the Seductive Whispers quest (Wilbert, Aden, 50+). No finished Lance on the tracker; estimated from dual Keshanberk at 68M.</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Weapon (low)</td><td class="item">Great Axe<span class="stat">P.Atk 175 / M.Atk 91, classed as a polearm on Lu4. SA stage 9: Haste / Health / Critical Stun</span></td><td class="num">n/a</td><td class="num">–</td><td class="num">–</td><td class="how">Recipe 60% from Vergara: 650k + 350 + 350 coins.</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Weapon SA</td><td class="item">Stage‑9/10 crystal + Gemstone B</td><td class="num">count not captured × 12–13.5k</td><td class="num">–</td><td class="num">–</td><td class="how">Gemstone B 12,000 on Gamma, 13,500 on White.</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Weapon +3</td><td class="item">3× Scroll: Enchant Weapon (B)</td><td class="num">9.45M</td><td class="num">470</td><td class="num">$47</td><td class="how">3.15M each. Blessed B weapon scroll 21M.</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Armor set</td><td class="item">Doom Plate Helmet / Armor / Gloves / Boots<span class="stat">Set: CON +3, STR −1, Max HP +350, sleep/hold resist +30%</span></td><td class="num">32.5M</td><td class="num">1,625</td><td class="num">$163</td><td class="how">Gamma: helmet 15M, armor 7.5M, gloves 3.5M, boots 6.5M. Alternatives: Zubei's 5 pcs 11.5M (STR +1, HP +300, P.Def +6%, reflect 5%), Avadon 5 pcs 10.3M (CON +1, HP +300, M.Def +8%), Blue Wolf 5 pcs 52.7M (STR +3, CON −1, DEX −2, Speed +7). Unsealing cost table for B not captured.</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Set +3</td><td class="item">12× Scroll: Enchant Armor (B)<span class="stat">Set enchant bonus at +3: P.Def +15, Accuracy +1</span></td><td class="num">13.8M</td><td class="num">690</td><td class="num">$69</td><td class="how">1.15M each. Five‑piece sets need 15 scrolls (17.3M).</td></tr>
+          <tr><td><span class="grade b">B</span></td><td class="slot">Jewelry</td><td class="item">Adamantite Necklace, 2× Earring, 2× Ring (low B)</td><td class="num">~4–5M</td><td class="num">200–250</td><td class="num">$20–25</td><td class="how">Black Ore (top B) not on the tracker. FunPay ask for an Adamantite set on White: €183.</td></tr>
+          <tr class="total"><td><span class="grade b">B</span></td><td class="slot">Core total</td><td class="item">Lance, +3, Doom +3, Adamantite</td><td class="num">~95–105M + SA</td><td class="num">~4,750–5,250</td><td class="num">$475–525</td><td class="how">With Zubei's instead of Doom: ~75–85M, ~3,800–4,200 MC.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="a">
+    <div class="section-head">
+      <div class="kicker"><span class="grade a">A</span><h2>A‑grade kit</h2></div>
+      <p class="prose">Usable at levels 64–75. Top A (Majestic, Nightmare, Tiphon's Spear) is announced but not released. A parts and recipes come from the Tower of Insolence, Giants Cave and Ancient Battleground quests (64–75) and from 66+ mobs; every A craft needs Gemstone A (36,000 at grocers before tax). Gamma market only.</p>
+    </div>
+    <div class="totals">
+      <div><span class="label">Adena</span><span class="value">~290M</span><span class="note">plus ~5M unsealing</span></div>
+      <div class="mc"><span class="label">Master Coins</span><span class="value">~14,500</span><span class="note">Halberd, Tallum, +3, Phoenix</span></div>
+      <div><span class="label">Store USD</span><span class="value">~$1,450</span><span class="note">Gamma prices</span></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>How to get / notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Weapon (low)</td><td class="item">Halberd<span class="stat">P.Atk 213 / M.Atk 107. SA stage 11 + 170 Gemstone A: Haste / Wide Blow / Critical Stun. Rare: Lightning</span></td><td class="num">65M</td><td class="num">3,250</td><td class="num">$325</td><td class="how">Gamma market. Recipe (60%) 1.1M, Halberd Edge 400k each. Any SA in an A weapon adds +5% PvP damage.</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Weapon (mid)</td><td class="item">Tallum Glaive<span class="stat">P.Atk 232 / M.Atk 114. SA stage 12 + 260 Gemstone A: Guidance / Wide Blow / Health. Rare: Earth</span></td><td class="num">not on tracker</td><td class="num">–</td><td class="num">–</td><td class="how">Mid A recipes from the Banners of the Ancient Battleground quest (70–75).</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Weapon (top)</td><td class="item">Tiphon's Spear<span class="stat">P.Atk 251 / M.Atk 121. SA stage 13 + 400 Gemstone A: Critical Stun / Wide Blow / Health</span></td><td class="num">not in game</td><td class="num">–</td><td class="num">–</td><td class="how">"Top A‑grade will be added later."</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Weapon SA</td><td class="item">Gemstone A at 36k: 170 / 260 / 400 pcs by tier</td><td class="num">6.1M / 9.4M / 14.4M</td><td class="num">306 / 468 / 720</td><td class="num">$31 / $47 / $72</td><td class="how"></td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Weapon +3</td><td class="item">3× Scroll: Enchant Weapon (A)</td><td class="num">33M</td><td class="num">1,650</td><td class="num">$165</td><td class="how">11M each. Blessed A weapon scroll 60M.</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Armor set</td><td class="item">Tallum Plate Helmet / Armor / Gauntlets / Boots<span class="stat">Set: STR +2 with no CON loss, Atk Spd +8%, weight +6,800, poison/bleed resist +80%, mental resist +50%</span></td><td class="num">~90M</td><td class="num">4,500</td><td class="num">$450</td><td class="how">Gamma: helmet 23M, armor 25.5M, boots 23.4M, gauntlets unlisted. Unsealing a Tallum / Dark Crystal full set: 3M adena plus 180 and 270 of two unsealing materials. Alternative: Dark Crystal set ~121M (CON +2, DEX +1, heal +8%).</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Set +3</td><td class="item">12× Scroll: Enchant Armor (A)<span class="stat">Set enchant bonus at +3: P.Def +25, Accuracy +1, MP regen +1, skill MP −3%</span></td><td class="num">48M</td><td class="num">2,400</td><td class="num">$240</td><td class="how">4M each. Blessed A armor scroll 25M.</td></tr>
+          <tr><td><span class="grade a">A</span></td><td class="slot">Jewelry</td><td class="item">Phoenix Necklace, 2× Earring, 2× Ring (low A)</td><td class="num">45M</td><td class="num">2,250</td><td class="num">$225</td><td class="how">Gamma: necklace 9M, earring 13M, ring 5M. Unsealing: necklace 420k, earring 315k, ring 210k each. Majestic jewelry (top A) not released.</td></tr>
+          <tr class="total"><td><span class="grade a">A</span></td><td class="slot">Core total</td><td class="item">Halberd, SA, +3, Tallum +3, Phoenix</td><td class="num">~290M</td><td class="num">~14,500</td><td class="num">~$1,450</td><td class="how">Add roughly 5M adena for unsealing.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="s">
+    <div class="section-head">
+      <div class="kicker"><span class="grade s">S</span><h2>S‑grade</h2></div>
+      <p class="prose">Not in Lu4. The level cap is 75, A‑grade is the 64–75 tier, and the Lu4 weapon database and market tracker contain no S items. The "S‑Grade Sets Bonuses" wiki article belongs to the separate PC MasterWork server. Nothing to price until the cap rises.</p>
+    </div>
+  </section>
+
+  <section id="se">
+    <div class="section-head">
+      <h2>Running a Shillien Elder box</h2>
+      <p class="prose">The SE only exists alongside the Bounty Hunter if one account has Premium, because Lu4 allows a single window and Premium adds one. Put it on the BH: the spoil bonus counts only on the spoiler, and party drop bonus is weighted by damage, so a healer that never hits anything does not dilute it.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Grade</th><th>Slot</th><th>Item and stats</th><th class="num">Adena</th><th class="num">MC</th><th class="num">USD</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="grade n">–</span></td><td class="slot">Premium</td><td class="item">30 days / 100 days<span class="stat">+1 window, +50% EXP / SP / drop / spoil, +50% weight, free NPC buffs</span></td><td class="num">–</td><td class="num">250 / 500</td><td class="num">$25 / $50</td><td class="how">The largest recurring MC cost of the whole setup.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">SE armor</td><td class="item">Karmian Tunic / Stockings / Gloves / Boots<span class="stat">P.Def +6%, Cast Spd +15%</span></td><td class="num">0.20M + 1,918 coins each</td><td class="num">10</td><td class="num">$1</td><td class="how">Sorint Rank III.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">SE armor (top)</td><td class="item">Divine Tunic / Stockings / Gloves / Boots<span class="stat">WIT +2, INT −2, heal power +50, MP regen +15%, MP +175</span></td><td class="num">0.57M + 5,136 coins each</td><td class="num">28</td><td class="num">$3</td><td class="how">Sorint Rank I.</td></tr>
+          <tr><td><span class="grade c">C</span></td><td class="slot">SE jewelry</td><td class="item">Aquastone Necklace, 2× Moonstone Earring, 2× Aquastone Ring</td><td class="num">0.17M + 1,434 coins each</td><td class="num">8</td><td class="num">$1</td><td class="how">Sorint Rank III. Any D or C mage weapon is fine for a box healer.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="callout"><strong>Build implication.</strong> With SE heals and Vampiric Rage, take Full Plate (its +4% Vampiric Rage effect stacks on the buff) and the offensive SA (Wide Blow or Towering Blow) rather than Health. On Interlude rules the SE also brings Wind Walk, Shield, Regeneration, Mental Shield, Concentration, Recharge and heals; Empower and Acumen are wasted on a BH. Lu4 reworked its buff system, so confirm in‑game.</p>
+  </section>
+
+  <section id="rules">
+    <div class="section-head">
+      <h2>Enchant, SA and set rules on Lu4</h2>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Enchanting</h3>
+        <ul class="tight">
+          <li>Weapons are safe to +3. Armor is safe to +3, one‑piece body armor to +4.</li>
+          <li>A failed normal scroll crystallizes the item. A failed blessed scroll resets it to +0.</li>
+          <li>Set enchant bonuses need every set piece at the level; "mini" D sets get none.</li>
+          <li>Armor gives HP from +4 (a D helmet: +5 at +4, +12, +25, +40, +60 at +8).</li>
+          <li>Above safe, assume Interlude‑style ~2/3 per attempt. Lu4's exact rates were not published where I could reach.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Soul crystals (SA)</h3>
+        <ul class="tight">
+          <li>D, C, B and A weapons take SA. Stage by tier: D 2 / 3 / 4, C 5 / 6 / 7 / 8, B 9 / 10, A 11 / 12 / 13.</li>
+          <li>Insertion costs gemstones of the weapon's grade: Glaive 150 D; Body Slasher 97 C, Bec de Corbin 238, Poleaxe 306, Scorpion / Widow Maker 225, Orcish Poleaxe 555; A 170 / 260 / 400.</li>
+          <li>Gemstone prices: D 1,350 · C 3,600–4,050 · B 12,000–13,500 · A 36,000–40,500.</li>
+          <li>Stage‑0 crystals come from any blacksmith; level them by killing mobs of the right level.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Set enchant bonus, heavy sets</h3>
+        <div class="tablewrap flat">
+          <table class="compact">
+            <thead><tr><th>Grade</th><th>+3</th><th>+6 and up</th></tr></thead>
+            <tbody>
+              <tr><td><span class="grade d">D</span></td><td>P.Def +5, Acc +1</td><td>P.Def +25, Acc +3, MP regen +3, skill MP −5%, debuff resist +10%</td></tr>
+              <tr><td><span class="grade c">C</span></td><td>P.Def +10, Acc +1</td><td>P.Def +35, Acc +3, MP regen +3, skill MP −5%, debuff resist +10%</td></tr>
+              <tr><td><span class="grade b">B</span></td><td>P.Def +15, Acc +1</td><td>P.Def +50, Acc +3, MP regen +3, skill MP −5%, debuff resist +10%</td></tr>
+              <tr><td><span class="grade a">A</span></td><td>P.Def +25, Acc +1, MP regen +1, skill MP −3%</td><td>P.Def +70, Acc +4, MP regen +4, skill MP −6%, debuff resist +10%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Scroll prices (Gamma tracker)</h3>
+        <dl class="kv">
+          <dt>D</dt><dd>weapon unpriced · armor 100k · blessed 2.2M / 120k</dd>
+          <dt>C</dt><dd>weapon 920k · armor 100k · blessed 4.5M / 1M</dd>
+          <dt>B</dt><dd>weapon 3.15M · armor 1.15M · blessed 21M / 12M</dd>
+          <dt>A</dt><dd>weapon 11M · armor 4M · blessed 60M / 25M</dd>
+          <dt>Augment</dt><dd>C and up only. Life Stone 450k, High 775k, Top 2M, plus Gemstone D and adena per roll</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <footer id="sources">
+    <p><strong>Caveats.</strong> Scroll, life‑stone and finished‑item prices are Gamma's market tracker because Black and White only list materials, gemstones and the MC rate. Magic Coins have no listed price anywhere; on a new server that column is farming time or a private purchase. The MC rate moved from 9,000 to 16,000 on Black in one week, so re‑check it before converting. Lu4's enchant success rates above +3, Gemstone B counts for B‑grade SA and the B‑grade unsealing table were behind the wiki's anti‑bot wall.</p>
+    <p class="sources-head"><strong>Sources.</strong></p>
+    <ul>
+      <li><a href="https://lu4.org/shop">Lu4 store</a></li>
+      <li><a href="https://masterwork.wiki/en/item/4037-master-coin">Master Coin item page (10 MC = $1)</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/587-premium-account">Premium Account (window limit, bonuses)</a></li>
+      <li><a href="https://mw5.community/topic/219459-faq-lu4-%E2%80%94-chasto-zadavaemye-voprosy-pered-startom-chasti-zapitannya-pered-startom-frequently-asked-questions-before-the-start/">Lu4 pre‑launch FAQ (MC is tradeable)</a></li>
+      <li><a href="https://mw5.community/topic/214965-lu4-game-store/">Lu4 game store concept</a></li>
+      <li><a href="https://mw5.community/topic/218679-lu4-liberta-ultimata-kontsept-alpha-1-220626-gamma-update/">Alpha 1 concept (A‑grade, SA gemstones, set enchant bonuses, unsealing)</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/364-ngd-equipment-upgrade">Ng/D equipment upgrade ladder</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/793-all-weapon-types">All weapon types</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/362-ngd-grade-sets-upgrades">Ng/D set bonuses</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/558-cba-grade-sets-upgrades">C/B/A set bonuses</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/382-lu4-quest-coins-of-magic-40">Coins of Magic 40+ (Sorint prices)</a></li>
+      <li><a href="https://masterwork.wiki/lu4/posts/post/388-lu4-quest-kails-magic-coin-48">Kail's Magic Coin 48+ (recipes)</a></li>
+      <li><a href="https://guide.lu4lab.com/">Lu4lab guides (open mirror of the wiki)</a></li>
+      <li><a href="https://guide.lu4lab.com/soul-crystal-sa.html">Soul crystals on Lu4</a></li>
+      <li><a href="https://guide.lu4lab.com/life-stones.html">Life stones on Lu4</a></li>
+      <li><a href="https://lu4db.ru/market">lu4db market tracker (MC rate, item prices)</a></li>
+      <li><a href="https://funpay.com/en/chips/22/">FunPay Lu4 coins</a>, <a href="https://funpay.com/en/chips/10/">adena</a>, <a href="https://funpay.com/en/lots/3/">items</a></li>
+      <li><a href="https://l2hub.info/lu4-ru/items/scrl_of_ench_wp_d">L2Hub Lu4 item database (scroll rules)</a></li>
+    </ul>
+    <p class="sources-head">Part of the <a href="../">LU4 Polearm Guide</a> · <a href="https://github.com/G3N7/lu4-polearm-guide">source on GitHub</a></p>
+  </footer>
+</div>
+
+</body>
+</html>

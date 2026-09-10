@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, SOURCES_MD, readGuide, extractLinks, isExternal, sections } from './guide.mjs';
+import { ROOT, SRC, SOURCES_MD, readGuide, extractLinks, isExternal, sections } from './guide.mjs';
 
 const HOST_LABELS = {
   'mw5.community': 'official forum',
@@ -65,12 +65,18 @@ export function renderSources(html) {
 }
 
 function cli(argv) {
-  const check = argv.includes('--check');
-  const unknown = argv.filter((a) => a !== '--check');
-  if (unknown.length) throw new Error(`unknown argument(s): ${unknown.join(' ')}`);
-  const md = renderSources(readGuide());
-  const rel = path.relative(ROOT, SOURCES_MD);
-  const existing = fs.existsSync(SOURCES_MD) ? fs.readFileSync(SOURCES_MD, 'utf8') : null;
+  let check = false;
+  let out = SOURCES_MD;
+  let src = SRC;
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--check') check = true;
+    else if (argv[i] === '--out') out = path.resolve(argv[++i]);
+    else if (argv[i] === '--src') src = path.resolve(argv[++i]);
+    else throw new Error(`unknown argument: ${argv[i]}`);
+  }
+  const md = renderSources(readGuide(src));
+  const rel = path.relative(ROOT, out) || out;
+  const existing = fs.existsSync(out) ? fs.readFileSync(out, 'utf8') : null;
   if (existing === md) {
     console.log(`${rel} is up to date`);
     return;
@@ -79,7 +85,7 @@ function cli(argv) {
     console.error(`${rel} is out of date — run "npm run sources" and commit the result`);
     process.exit(1);
   }
-  fs.writeFileSync(SOURCES_MD, md);
+  fs.writeFileSync(out, md);
   console.log(`${existing === null ? 'wrote' : 'updated'} ${rel}`);
 }
 

@@ -57,15 +57,40 @@ export function currentVersion(html) {
 
 const MONTHS = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
 
+/** "10 Sep 2026" → "2026-09-10" (the human date format used in the header and footer). */
+export function parseLongDate(text, where = 'date') {
+  const m = /^(\d{1,2}) ([A-Z][a-z]{2}) (\d{4})$/.exec(String(text).trim());
+  if (!m) throw new Error(`unexpected ${where}: "${text}" (expected e.g. "10 Sep 2026")`);
+  const month = MONTHS[m[2]];
+  if (!month) throw new Error(`unknown month in ${where}: ${m[2]}`);
+  return `${m[3]}-${String(month).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+}
+
 /** "Last updated: 10 Sep 2026" (header chip) → "2026-09-10". */
 export function lastUpdated(html) {
   const $ = load(html);
   const text = $('header.site .meta .updated').text().replace(/\s+/g, ' ').trim();
-  const m = /^Last updated: (\d{1,2}) ([A-Z][a-z]{2}) (\d{4})$/.exec(text);
+  const m = /^Last updated: (.+)$/.exec(text);
   if (!m) throw new Error(`unexpected "Last updated" chip: "${text}"`);
-  const month = MONTHS[m[2]];
-  if (!month) throw new Error(`unknown month in "Last updated" chip: ${m[2]}`);
-  return `${m[3]}-${String(month).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+  return parseLongDate(m[1], '"Last updated" chip');
+}
+
+/** The "vN" chip in the header → N. */
+export function headerVersion(html) {
+  const $ = load(html);
+  const text = $('header.site .meta .version').text().trim();
+  const m = /^v(\d+)$/.exec(text);
+  if (!m) throw new Error(`unexpected version chip in the header: "${text}"`);
+  return Number(m[1]);
+}
+
+/** The "vN · D Mon YYYY" stamp in the footer → { version, date }. */
+export function footerStamp(html) {
+  const $ = load(html);
+  const text = $('footer').text().replace(/\s+/g, ' ').trim();
+  const m = /\bv(\d+) · (\d{1,2} [A-Z][a-z]{2} \d{4})\b/.exec(text);
+  if (!m) throw new Error('footer has no "vN · D Mon YYYY" stamp');
+  return { version: Number(m[1]), date: parseLongDate(m[2], 'footer date') };
 }
 
 export function isExternal(href) {
