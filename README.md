@@ -94,11 +94,9 @@ is not allowed to do it:
 2. Open **Actions → Test & publish → Run workflow** on the default branch (or push a commit).
 3. The run's **Publish to GitHub Pages** job prints the site URL.
 
-**Default branch.** The deploy job follows whatever branch is set as the repository's default
-(Settings → General → Default branch). The repository was created from the branch
-`claude/focused-galileo-xwig8c`, which GitHub made the default because it was the first push. To
-publish from `main` instead: create `main` from that branch, make it the default in Settings, and
-then check **Settings → Environments → github-pages → Deployment branches** allows `main` (GitHub
+**Default branch.** `main` is the default branch and the one that publishes. The deploy job reads
+the default branch at run time, so renaming it needs no workflow change; after a rename, check that
+**Settings → Environments → github-pages → Deployment branches** still allows the new name (GitHub
 pins that rule to the default branch at the time Pages was enabled).
 
 The site is served from a project path (`/lu4-polearm-guide/`), so links inside the page are
